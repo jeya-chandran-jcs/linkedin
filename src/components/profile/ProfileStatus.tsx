@@ -148,7 +148,7 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             gap:"1rem"
           }}
         >
-          <CertificateLogo />
+          <CertificateLogo height={50} width={85}/>
           <Typography component="a" variant="body2" sx={{fontWeight:"500"}} >GUVI Geek Networks, IIT-M Incubated Company</Typography>
         </Box>
       </Box>

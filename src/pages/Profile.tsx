@@ -11,7 +11,7 @@ export default function Profile() {
         display: "flex",
         justifyContent:"center",
         gap: "2rem",
-        padding: "2rem 0 0 0",
+        paddingY: "2rem",
       }}
     >
     <ProfileContent />

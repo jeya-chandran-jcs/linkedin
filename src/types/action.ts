@@ -45,5 +45,6 @@ export type MuiButtonProps={
     className?:string,
     text?:string,
     children?:React.ReactNode,
-    sx?:SxProps<Theme>
+    sx?:SxProps<Theme>,
+    ref?: React.Ref<HTMLButtonElement>
 }

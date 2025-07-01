@@ -45,7 +45,7 @@ const signInEmail=createRoute({
 })
 
 const profileRoute=createRoute({
-    path:"user/profile",
+    path:"user-profile",
     getParentRoute:()=>rootRoute,
     component:lazyRouteComponent(()=>import("../pages/Profile"))
 })

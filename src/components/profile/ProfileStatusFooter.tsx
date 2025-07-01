@@ -1,12 +1,60 @@
-import { Box, Typography } from "@mui/material";
+import { Box, ClickAwayListener, Typography } from "@mui/material";
 import MuiButton from "../ActionComp/MuiButton";
+import { OpenTo, type PaperUtilityOpenToProps } from "../../utility/paper";
+import { useRef, useState } from "react";
+import Paper from "../base/Paper";
 
+console.log(OpenTo)
+
+type ShowProps={
+    openTo:boolean,
+    enhanceProfile:boolean,
+    resources:boolean
+}
 
 export default function ProfileStatusFooter() {
+    const [show,setShow]=useState<ShowProps>({openTo:false,enhanceProfile:false,resources:false})
+    // const [enhanceProfile,setEnhanceProfile]=useState<boolean>(false)
+    
+    const buttonRef={
+        opento:useRef<HTMLButtonElement | null>(null),
+        enhanceProfile:useRef<HTMLButtonElement | null>(null),
+        resources:useRef<HTMLButtonElement | null>(null)
+    }
+
+
+    const handleShow=(key: keyof typeof show)=>{
+        setShow((prev)=>({
+            openTo:false,
+            enhanceProfile:false,
+            resources:false,
+            [key]: !prev[key]
+        }))
+    }
+
+    const handleRef=(e:MouseEvent | TouchEvent)=>{
+        for(const key in buttonRef)
+        {
+            const ref=buttonRef[key as keyof typeof buttonRef]
+            if(ref.current && e.target instanceof Node && ref.current.contains(e.target))
+            {
+                return
+            }
+        }
+        setShow({openTo:false,enhanceProfile:false,resources:false})
+    }
+
+    // const handleClose=()=>{
+
+    // }
+
   return (
+    <ClickAwayListener  onClickAway={handleRef}>
     <Box sx={{display:"flex",flexDirection:"column",gap:"5px",marginY:"8px"}}>
-        <Box sx={{display:"flex",gap:"8px"}}>
-            <MuiButton text={"open to"}  type={"button"} variant={"contained"} color={"primary"}  size={"medium"}
+        
+
+        <Box sx={{display:"flex",gap:"8px",position:"relative",overflow:"visible",}}>
+            <MuiButton text={"open to"}  type={"button"} variant={"contained"} color={"primary"}  size={"medium"} onClick={()=>handleShow("openTo")} ref={buttonRef.opento}
             sx={{
                 color:"#fff",
                 fontWeight:"900",
@@ -20,9 +68,35 @@ export default function ProfileStatusFooter() {
                 }
             }}
             />
+            {show.openTo && (
+                <Box sx={{
+                    position:"absolute",
+                    top:"100%",
+                    left: 0,
+                    zIndex: 1,
+                    mt: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.5rem",
+                    backgroundColor: "white",
+                    padding: "1rem",
+                    boxShadow: 3,
+                    borderRadius: "10px",
+                    width: "300px",
+                  
+                }}>
+                    {OpenTo.map((items:PaperUtilityOpenToProps,index:number)=>(
+                        <Paper key={index} title={items.title} desc={items.desc}  onClick={()=>{
+                            alert(`item clicked , ${items.title}`)
+                            setShow({openTo:false,enhanceProfile:false,resources:false})
+                        }}/>
+                    ))}
+                </Box>
+            )}
              <MuiButton text={"Add Profile Section"}  type={"button"} variant={"outlined"} color={"primary"}  size={"medium"} 
             sx={{
                 // color:"#fff",
+                
                 fontWeight:"900",
                 borderRadius:"19px",
                 textTransform:"none",
@@ -82,5 +156,7 @@ export default function ProfileStatusFooter() {
             <Typography variant="body2" component="a" color="primary" sx={{fontWeight:"bold"}}>Show details</Typography>
         </Box>
     </Box>
+    </ClickAwayListener>
+
   )
 }
