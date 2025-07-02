@@ -14,7 +14,7 @@ export default function ProfileUser() {
               ? user.photoURL
               : 'https://i.pinimg.com/736x/cd/3e/d5/cd3ed5a95ef5ac1d694899a51798874b.jpg';
              setPic(isProfilePicExist);
-
+            console.log("url",user?.photoURL)
             setAuthUser(user)
         })
         return ()=>unSubscribe()
@@ -29,12 +29,13 @@ export default function ProfileUser() {
           width:"100%",
           border:"1px solid gray",    
           position:'relative',
-          overflow:"visible"
+          overflow:"visible",
+          backgroundColor:"white"
         }}>
             {/* banner */}
         <Box sx={{ borderTopLeftRadius: "8px", borderTopRightRadius: "8px", overflow: "hidden"}}>
           <Box component="img" src="https://media.licdn.com/dms/image/v2/D4E16AQHt4pdEWUsC-Q/profile-displaybackgroundimage-shrink_350_1400/profile-displaybackgroundimage-shrink_350_1400/0/1720793396449?e=1756944000&v=beta&t=xk5S5pKnXs8ivmWj3SLE78XdcEce41uvW0JuXakiAwU" alt="linked in img" 
-        sx={{width:"100%",height:"25vh",backgroundColor:"white",objectFit:"cover",display:"block"}}></Box>
+        sx={{width:"100%",height:"25vh",backgroundColor:"white",objectFit:"fit",display:"block"}}></Box>
         </Box>
         <Avatar src={pic} alt="https://i.pinimg.com/736x/cd/3e/d5/cd3ed5a95ef5ac1d694899a51798874b.jpg" sx={{width:150,height:150,objectFit:"contain",position:"absolute",left:"2rem" ,top:"16vh",border: "4px solid white",backgroundColor: "#f5f5f5",}}/>
         <ProfileStatus authUser={authUser}/>

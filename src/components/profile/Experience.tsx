@@ -13,7 +13,8 @@ export default function Experience() {
           padding:'1rem',
           display:"flex",
           flexDirection:"column",
-          gap:"1.3rem"
+          gap:"1.3rem",
+                    backgroundColor:"white"
     }}>
         <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
             <Typography variant="h6" component="h6" sx={{fontWeight:"600",fontSize:"1.1rem",color:"#212121"}}>Experience</Typography>

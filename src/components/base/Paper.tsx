@@ -15,29 +15,29 @@ export default function Paper({ title, desc, onClick, sx }: PaperProps) {
       component="button"
       onClick={onClick}
       style={{
+        
+      }}
+      sx={{
         all: 'unset',
         cursor: 'pointer',
         width: '100%',
-      }}
-      sx={{
-        padding: 2,
+        // padding: 2,
         borderRadius: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: 0.5,
+      
           '&:hover': {
                         backgroundColor: '#F3F6F9',
                     },
         ...sx,
       }}
     >
-      <Typography variant="subtitle1" fontWeight={700}>
+      <Box padding={1}>
+        <Typography variant="subtitle1" fontWeight={700} >
         {title}
       </Typography>
       <Typography variant="body2" color="text.secondary">
         {desc}
       </Typography>
+      </Box>
     </MuiPaper>
   );
 }

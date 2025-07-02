@@ -11,7 +11,8 @@ export default function ProfileAdd() {
           border:"1px solid #D3D3D3",    
           position:'relative',
           overflow:"clip",
-          padding:'1rem'
+          padding:'1rem',
+                    backgroundColor:"white"
         }}>
         <Typography variant="body1" component="h6" sx={{fontWeight:"500",fontSize:"1.2rem"}}>Suggested For You</Typography>
         <Typography color="text.secondary"><i className="fa-solid fa-eye text-gray-500"></i>  Private To You</Typography>

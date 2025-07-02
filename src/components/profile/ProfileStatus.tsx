@@ -15,7 +15,7 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
     <Container
       sx={{
         width: "100%",
-        marginTop: "10vh",
+        marginTop: "6vh",
         display: "flex",
         flexDirection: "column",
         padding:"1rem"
