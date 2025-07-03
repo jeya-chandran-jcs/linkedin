@@ -50,14 +50,23 @@ const profileRoute=createRoute({
     component:lazyRouteComponent(()=>import("../pages/Profile"))
 })
 
+const profileEditModalRoute=createRoute({
+    path:"/user-profile/edit/$section",
+    getParentRoute:()=>rootRoute,
+    component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/EducationAdd"))
+})
+
 const routeTree=rootRoute.addChildren([
    notFoundRoute,
     loginRoute,
     homeRoute,
     signUpRoute,
     signInEmail,
-    profileRoute
-    
+    profileRoute.addChildren([
+        profileEditModalRoute
+    ]),
+    // profileEditModalRoute
+
 ])
 
 const router=createRouter({routeTree,notFoundRoute})
