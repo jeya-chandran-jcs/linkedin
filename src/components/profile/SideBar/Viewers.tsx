@@ -40,7 +40,7 @@ export default function Viewers({adViewers}:ViewersProps) {
 
             {/* footer */}
             <Box sx={{ '&:hover': { backgroundColor: '#f0f0f0' }, width: "100%", textAlign: "center", padding: "0.7rem 1rem", cursor: "pointer", borderTop: "1px solid #e0e0e0" }}>
-                <Typography component="a" href='#' sx={{ alignItems: "center", gap: "0.4rem", justifyContent: "center", fontSize: "1rem", width: "100%", display: "inline-flex", color: "inherit", textDecoration: "none" }}>{adViewers?.footer}</Typography>
+            {adViewers?.footer}
             </Box>
         </Box>
     )

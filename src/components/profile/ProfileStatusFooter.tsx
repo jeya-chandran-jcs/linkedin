@@ -5,23 +5,26 @@ import { useRef, useState } from "react";
 import Paper from "../base/Paper";
 import EnhanceProfileCard from "../../utility/EnhanceProfileCard";
 import Resources from "../../utility/Resources";
+import AddProfile from "./AddProfile/AddProfile";
 
 console.log(OpenTo)
 
 type ShowProps={
     openTo:boolean,
     enhanceProfile:boolean,
-    resources:boolean
+    resources:boolean,
+    addProfile:boolean
 }
 
 export default function ProfileStatusFooter() {
-    const [show,setShow]=useState<ShowProps>({openTo:false,enhanceProfile:false,resources:false})
+    const [show,setShow]=useState<ShowProps>({openTo:false,enhanceProfile:false,resources:false,addProfile:false})
     // const [enhanceProfile,setEnhanceProfile]=useState<boolean>(false)
     
     const buttonRef={
         opento:useRef<HTMLButtonElement | null>(null),
         enhanceProfile:useRef<HTMLButtonElement | null>(null),
-        resources:useRef<HTMLButtonElement | null>(null)
+        resources:useRef<HTMLButtonElement | null>(null),
+        addProfile:useRef<HTMLButtonElement | null>(null)
     }
 
 
@@ -30,6 +33,7 @@ export default function ProfileStatusFooter() {
             openTo:false,
             enhanceProfile:false,
             resources:false,
+            addProfile:false,
             [key]: !prev[key]
         }))
     }
@@ -43,7 +47,7 @@ export default function ProfileStatusFooter() {
                 return
             }
         }
-        setShow({openTo:false,enhanceProfile:false,resources:false})
+        setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false})
     }
 
     // const handleClose=()=>{
@@ -92,13 +96,13 @@ export default function ProfileStatusFooter() {
                     {OpenTo.map((items:PaperUtilityOpenToProps,index:number)=>(
                         <Paper key={index} title={items.title} desc={items.desc}  onClick={()=>{
                             alert(`item clicked , ${items.title}`)
-                            setShow({openTo:false,enhanceProfile:false,resources:false})
+                            setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false})
                             
                         }}/>
                     ))}
                 </Box>
             )}
-             <MuiButton text={"Add Profile Section"}  type={"button"} variant={"outlined"} color={"primary"}  size={"medium"} 
+             <MuiButton text={"Add Profile Section"}  type={"button"} variant={"outlined"} color={"primary"}  size={"medium"} onClick={()=>handleShow("addProfile")} ref={buttonRef.addProfile}
             sx={{
                 // color:"#fff",
                 
@@ -116,6 +120,15 @@ export default function ProfileStatusFooter() {
                  }
                 }}
             />
+              {show.addProfile && (
+                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })} 
+                       sx={{position:"fixed",top:0,left:0,backgroundColor:"rgba(0,0,0,0.4)",zIndex:"9999",width:"100vw",height:"100vh",display:"flex",justifyContent:"center",alignItems:"flex-start",paddingTop:"3rem"}}
+                >
+                    <Box sx={{backgroundColor:"white",width:"30%",borderRadius:"8px",display:"flex"}}  onClick={(e) => e.stopPropagation()}>
+                        <AddProfile onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })}/>
+                    </Box>
+                </Box>
+            )}
              <MuiButton text={"Enhance Profile"}  type={"button"} variant={"outlined"} color={"primary"}  size={"medium"} onClick={()=>handleShow("enhanceProfile")} ref={buttonRef.enhanceProfile}
             sx={{
                 // color:"#fff",
@@ -133,17 +146,12 @@ export default function ProfileStatusFooter() {
                  }
                 }}  
             />
-            {/* {show.enhanceProfile && (
-                    <Box sx={{position:"absolute",top:"-50vh",left:"20vw",boxShadow:" 0 2px 4px rgba(0,0,0,0.5)",backgroundColor:"white",zIndex:"1",width:"60%",borderRadius:"8px"}}>
-                        <EnhanceProfileCard />
-                    </Box>
-                )} */}
                  {show.enhanceProfile && (
-                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false })} 
+                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })} 
                        sx={{position:"fixed",top:0,left:0,backgroundColor:"rgba(0,0,0,0.4)",zIndex:"9999",width:"100vw",height:"100vh",display:"flex",justifyContent:"center",alignItems:"flex-start",paddingTop:"3rem"}}
                 >
                     <Box sx={{backgroundColor:"white",width:"30%",borderRadius:"8px",display:"flex"}}  onClick={(e) => e.stopPropagation()}>
-                        <EnhanceProfileCard onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false })}/>
+                        <EnhanceProfileCard onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })}/>
                     </Box>
                 </Box>
             )}
@@ -167,7 +175,7 @@ export default function ProfileStatusFooter() {
             />
             {show.resources && (
                 <Box sx={{position:"absolute",top:"100%",paddingTop:"0.5rem",left:"24vw",width:"100%",zIndex:"1"}}>
-                    <Resources onClick={()=>setShow({openTo:false,enhanceProfile:false,resources:false})}/>
+                    <Resources onClick={()=>setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false})}/>
                 </Box>
             )}
         </Box>

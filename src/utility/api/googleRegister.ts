@@ -1,11 +1,14 @@
 import type { MockDataProps } from "../../types/mockDataApi";
 import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 import { auth } from "../../config/google";
+import postData from "./postData";
+import { API } from "../../global";
 
 
 type RegisterProps=Pick<MockDataProps ,"name"| "email" | "password">
 
 export default async function googleRegister({name,email,password}:RegisterProps) {
+
     try{
         const userCredential=await createUserWithEmailAndPassword(auth,email,password)
         
@@ -18,7 +21,18 @@ export default async function googleRegister({name,email,password}:RegisterProps
 
         const user=userCredential.user
 
-        console.log("registered user",user)
+        console.log("registered user successful from google register utility",user)
+
+        const registerAPI={
+            uid:user.uid,
+            name:name,
+            email:email,
+            password:password
+
+        }
+        const postDataINMock=await postData({API,method:"POST",data:registerAPI})
+        console.log("data posted in google register with " , postDataINMock)
+
         const token=await user.getIdToken()
         return {
            uid: user.uid,
@@ -26,7 +40,7 @@ export default async function googleRegister({name,email,password}:RegisterProps
             email:user.email,
             token
         }
-    }   
+    }    
     catch(err:unknown)
     {
         if(err instanceof Error)
