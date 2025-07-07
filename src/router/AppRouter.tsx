@@ -1,6 +1,8 @@
 import { createRoute,createRootRoute, createRouter,RouterProvider,Outlet,redirect,Navigate,lazyRouteComponent } from "@tanstack/react-router";
 import Navbar from "../components/base/Navbar";
 import Footer from "../components/base/Footer";
+import ProfileEditModala from "../components/profile/AddProfile/ComponentsAPI/ProfileEditModala";
+import Profile from "../pages/Profile";
 
 const rootRoute=createRootRoute({
     component:()=>(
@@ -47,13 +49,19 @@ const signInEmail=createRoute({
 const profileRoute=createRoute({
     path:"user-profile",
     getParentRoute:()=>rootRoute,
-    component:lazyRouteComponent(()=>import("../pages/Profile"))
+    // component:lazyRouteComponent(()=>import("../pages/Profile"))
+    component: () => (
+    <>
+      <Profile /> 
+      <Outlet /> 
+    </>
+  ),
 })
 
 const profileEditModalRoute=createRoute({
-    path:"/user-profile/edit/$section",
-    getParentRoute:()=>rootRoute,
-    component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/EducationAdd"))
+    path:"edit/$section",
+    getParentRoute:()=>profileRoute,
+    component: ProfileEditModala,
 })
 
 const routeTree=rootRoute.addChildren([
@@ -65,8 +73,6 @@ const routeTree=rootRoute.addChildren([
     profileRoute.addChildren([
         profileEditModalRoute
     ]),
-    // profileEditModalRoute
-
 ])
 
 const router=createRouter({routeTree,notFoundRoute})

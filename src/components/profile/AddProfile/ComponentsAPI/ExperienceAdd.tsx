@@ -19,7 +19,7 @@ export default function ExperienceAdd() {
                       backgroundColor:"white"
         }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>Education</Typography>
+                <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>experience add</Typography>
                 <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
                     <a className="fa-solid fa-plus font-bold text-lg text-gray-600" href="#"></a>
                     <a className="fa-solid fa-pen font-bold text-lg text-gray-600"></a>

@@ -1,58 +1,208 @@
-
-
-
-import { Box, Divider, Stack, Typography } from "@mui/material";
-import CertificateLogo from "../../../../utility/CertificateLogo";
+import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { educationSupportEdited, } from "../../../../utility/AddProfileSupport";
+import TextFieldMui from "../../../ActionComp/TextFieldMui";
+import { useState } from "react";
+import MuiButton from "../../../ActionComp/MuiButton";
 
 
 export default function EducationAdd() {
-    return (
-        <Box sx={{
-            borderRadius: "8px",
-            width: "100%",
-            border: "1px solid #D3D3D3",
-            position: 'relative',
-            overflow: "clip",
-            padding: '1rem',
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.3rem",
-                      backgroundColor:"white"
-        }}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>Education</Typography>
-                <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-                    <a className="fa-solid fa-plus font-bold text-lg text-gray-600" href="#"></a>
-                    <a className="fa-solid fa-pen font-bold text-lg text-gray-600"></a>
-                </Box>
-            </Box>
+  const [formValues,setfromValues]=useState<{[key:string]:string}>({})
 
 
-            <Box sx={{ display: "flex", flexDirection: "column" ,gap:"1rem"}}>
-                <Box sx={{ display: "flex", alignItems: "start", gap: "1rem", }}>
-                    <CertificateLogo height={50} width={80} />
-                    <Stack spacing={0}>
-                        <Typography variant="body1" component="h6" sx={{ fontWeight: "500", fontSize: "1.2rem" }}>Guvi Geek Networks, IIT- M Incubated Company</Typography>
-                        <Typography variant="body2" component="p" >Certification Full Stack Development</Typography>
-                        <Typography variant="body1" component="h6" color="text.secondary">Sep 2023 - dec 2023</Typography>
-                        <Typography variant="body2" component="p" color="text.secondary">Activities and societies: -Developed a Tic Tac Toe game using React as part of hands-on learning.
-                            -Created a URL shortening mini-project, applying full stack development skills.</Typography>
-                    </Stack>
-                </Box>
-                <Divider />
+  return (
+    <Box sx={{
+      borderRadius: "8px",
+      width: "82%",
+      marginX: "auto",
+      border: "1px solid #D3D3D3",
+      position: 'relative',
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      gap: "1.3rem",
+      backgroundColor: "white"
+    }}>
+      {/* header */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #D3D3D3", padding: "1rem" }}>
+        <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>Education add</Typography>
+        <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+          <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="#"></a>
 
-                <Box sx={{ display: "flex", alignItems: "start", gap: "1rem", }}>
-                    <CertificateLogo height={50} width={80} />
-                    <Stack spacing={0}>
-                        <Typography variant="body1" component="h6" sx={{ fontWeight: "500", fontSize: "1.2rem" }}>Ultra Arts & Science college</Typography>
-                        <Typography variant="body2" component="p" >Msc Computer Science</Typography>
-                        <Typography variant="body1" component="h6" color="text.secondary">june 2021 - apr 2023</Typography>
-                        <Typography variant="body2" component="p" color="text.secondary">Activities and societies: -Developed a Tic Tac Toe game using React as part of hands-on learning.
-                            -Created a URL shortening mini-project, applying full stack development skills.</Typography>
-                    </Stack>
-                </Box>
-
-            </Box>
         </Box>
-    )
+      </Box>
+      <Typography color="text.secondary" variant="subtitle2" component="p" sx={{ mt: 0.2, paddingX: "1rem" }} fontSize={"0.8rem"}>* Indicates required</Typography>
+
+
+      {/* body */}
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5rem", paddingX: "1.5rem", marginBottom: "0", height:"60vh", overflowY: "auto",  }}>
+        {educationSupportEdited.header.fields.map((item, index) => (
+          <Box key={index}>
+            <Typography component="label" variant="subtitle2" color="textSecondary">{item.label}</Typography>
+            <TextFieldMui fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}
+              value={formValues[item.key] || ""} 
+              handleChange={(e)=>setfromValues({...formValues,[item.key]:e.target.value})}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+
+                  borderRadius: "4px",
+                  fontSize: '14px',
+                  backgroundColor: '#fff',
+                  padding: '4px 2px',
+                  '& input': {
+                    padding: "3px 10px"
+                  },
+                  '& fieldset': {
+                    border: "1.5px solid #808080"
+                  },
+                  '&:hover fieldset': {
+                    border: '2px solid black',
+                  },
+                  '&.Mui-focused fieldset': {
+
+                    border: '2px solid black',
+                  }
+                }
+              }}
+              
+            />
+
+
+          </Box>
+        ))}
+
+        {educationSupportEdited.duration.fields.map((item, index) => (
+          <Box key={index}>
+
+            <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 2, }} >
+
+              {/* Start Date */}
+              <FormControl fullWidth sx={{ width: "50%", marginBottom: "10px" }} variant="outlined">
+                <Typography color="textSecondary" sx={{ fontSize: "0.8rem" }}>{item.label}</Typography>
+                <Select
+                  displayEmpty
+                 value={formValues[item.monthKey || ""] ?? ""}
+                  onChange={(e) => {
+                    if(item.monthKey) setfromValues({...formValues,[item.monthKey]:e.target.value})
+                  }}
+                  renderValue={(selected) => {
+                    if (!selected) {
+                      return <span className="text-gray-700 text-md">Month</span>; // or Year
+                    }
+                    return selected;
+                  }}
+                  sx={{
+                    fontSize: "14px",
+                    borderRadius: "4px",
+                    backgroundColor: "#fff",
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      border: "1.5px solid #808080",
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      border: '2px solid black',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      border: '2px solid black',
+                    },
+                    '& .MuiSelect-select': {
+                      padding: "6px 10px",
+                    },
+                  }}
+                >
+                  {item.monthValues?.map((m, i) => (
+                    <MenuItem key={i} value={m}>{m}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+
+
+              {/* Start Year */}
+              <FormControl fullWidth sx={{ width: "50%", marginTop: "11px" }}>
+                {/* <InputLabel>Start Year</InputLabel> */}
+
+                <Select
+                  displayEmpty
+                   value={item.yearkey ? formValues[item.yearkey] ?? "" : ""}
+                  onChange={(e) => {
+                    if(item.yearkey) setfromValues({...formValues,[item.yearkey]:e.target.value})
+                  }}
+                  renderValue={(selected) => {
+                    if (!selected) {
+                      return <span className="text-gray-700 text-md">Year</span>; // or Year
+                    }
+                    return selected;
+                  }}
+                  sx={{
+                    fontSize: "14px",
+                    borderRadius: "4px",
+                    backgroundColor: "#fff",
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      border: "1.5px solid #808080",
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      border: '2px solid black',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      border: '2px solid black',
+                    },
+                    '& .MuiSelect-select': {
+                      padding: "6px 10px",
+                    },
+                  }}
+                >
+                  {item.yearValues?.map((y, i) => (
+                    <MenuItem key={i} value={y}>{y}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+
+          </Box>
+        ))}
+
+        {educationSupportEdited.footer.fields.map((item, index) => (
+          <Box key={index}>
+            <Typography component="label" variant="subtitle2" color="textSecondary">{item.label}</Typography>
+            <TextFieldMui value={formValues[item.key] || ""} handleChange={(e)=>setfromValues(({...formValues,[item.key]:e.target.value}))} fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder} multiLine={item.type==="textArea"} minRow={item.type==="textArea" ? 3 : 1}
+             sx={{
+                '& .MuiOutlinedInput-root': {
+
+                  borderRadius: "4px",
+                  fontSize: '14px',
+                  backgroundColor: '#fff',
+                  padding: '4px 2px',
+                  '& input, & textarea': {
+        padding: "6px 10px",
+        fontFamily: 'inherit',
+        fontSize: "14px",
+        lineHeight: 1.5,
+      },
+                  '& fieldset': {
+                    border: "1.5px solid #808080"
+                  },
+                  '&:hover fieldset': {
+                    border: '2px solid black',
+                  },
+                  '&.Mui-focused fieldset': {
+
+                    border: '2px solid black',
+                  }
+                }
+              }}
+            />
+
+
+          </Box>
+
+        ))}
+      </Box>
+{/* footer */}
+      <Box sx={{padding:"1rem",borderTop:"1px solid lightgray",display:"flex",justifyContent:"flex-end" }}>
+          <MuiButton text={"save"} type={"button"} variant={"contained"} color={"primary"} sx={{borderRadius:"25px",padding:"4px 2px"}} onClick={()=>console.log(formValues)}/>
+      </Box>
+
+    </Box>
+  )
 }

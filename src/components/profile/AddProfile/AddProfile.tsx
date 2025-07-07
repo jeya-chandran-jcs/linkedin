@@ -1,11 +1,9 @@
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, List, ListItem, ListItemText, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { addProfileCore,addProfileRecommended,addProfileAdditional } from "../../../utility/addProfile";
-import { useState } from "react";
+import { proficeAccordion } from "../../../utility/addProfile";
+import { startTransition, useState } from "react";
 import { useNavigate, useParams } from "@tanstack/react-router";
-import EducationAdd from "./ComponentsAPI/EducationAdd";
-import ExperienceAdd from "./ComponentsAPI/ExperienceAdd";
 
 
 
@@ -13,28 +11,10 @@ type EnhancedProfileProps = {
     onClick: () => void
 }
 
-const proficeAccordion=[
-    {
-        title:"Core",
-        desc:"Start with the basics. Filling out these sections will help you be discovered by recruiters and people you may know",
-        list:addProfileCore
-    },
-    {
-        title:"Recommended",
-        desc:"Completing these sections will increase your credibility and give you access to more opportunities",
-        list:addProfileRecommended
-    },
-    {
-        title:"Additional",
-        desc:"Add even more personality to your profile. These sections will help you grow your network and build more relationships.",
-        list:addProfileAdditional
-    }
-]
 
 export default function AddProfile({ onClick }: EnhancedProfileProps) {
-    const [expanded,setExpanded]=useState<string | false>(false)
+    const [expanded,setExpanded]=useState<string | false>("Core")
     const navigate=useNavigate()
-    const {section}=useParams(({from:"/user-profile/edit/$section"}))
 
     const handleExpand=(value:string | false)=>{
         setExpanded((prev)=>(
@@ -42,19 +22,17 @@ export default function AddProfile({ onClick }: EnhancedProfileProps) {
         ))
     }
 
-    const handleClose=()=>{
-        navigate({to:"/user-profile"})
-    }
-
-    const renderForm = () => {
-    switch (section) {
-      case "education": return <EducationAdd />;
-      case "experience": return <ExperienceAdd/>;
-      // Add more cases
-      default: return null;
-    }
-  };
-
+    
+const handleGoToTitle=(str:string)=>{
+    onClick()
+    startTransition(()=>{
+         navigate({to:"/user-profile/edit/$section",
+        params:{section:str}
+    })
+    })
+   
+    console.log("str",str)
+}
     return (
         <Box sx={{
             borderRadius: "8px",
@@ -101,9 +79,9 @@ export default function AddProfile({ onClick }: EnhancedProfileProps) {
                         <List   sx={{margin:0}}>
                             {item.list.map((names, index)=>(
                                 
-                                <ListItem disableGutters sx={{py:0.5 , px:0, borderBottom:index !== item.list.length-1 && "1px solid #eee" ,}}>
-                                    <ListItemText primary={
-                                        <Typography component="a" href="#"  sx={{'&:hover':{cursor:"pointer"},color: "#4B4B4B",fontSize:"0.9rem",fontWeight:400}}>
+                                <ListItem disableGutters sx={{py:0.5 , px:0, borderBottom:index !== item.list.length-1 && "1px solid #eee" ,}} key={index}>
+                                    <ListItemText onClick={()=>handleGoToTitle(names.key)} primary={
+                                        <Typography component="p"  sx={{'&:hover':{cursor:"pointer"},color: "#4B4B4B",fontSize:"0.9rem",fontWeight:400}}>
                                             {names.name}
                                         </Typography>
                                     }/>

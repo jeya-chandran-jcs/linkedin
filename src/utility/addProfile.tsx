@@ -48,3 +48,21 @@ export const addProfileAdditional = [
     component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/OrganizationAdd"))
   },
 ]
+
+export const proficeAccordion=[
+    {
+        title:"Core",
+        desc:"Start with the basics. Filling out these sections will help you be discovered by recruiters and people you may know",
+        list:addProfileCore
+    },
+    {
+        title:"Recommended",
+        desc:"Completing these sections will increase your credibility and give you access to more opportunities",
+        list:addProfileRecommended
+    },
+    {
+        title:"Additional",
+        desc:"Add even more personality to your profile. These sections will help you grow your network and build more relationships.",
+        list:addProfileAdditional
+    }
+]
