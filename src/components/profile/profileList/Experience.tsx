@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import ExperienceLogo from "../../utility/ExperienceLogo";
+import ExperienceLogo from "../../../utility/ExperienceLogo";
 
 
 export default function Experience() {

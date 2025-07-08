@@ -1,11 +1,11 @@
 import { Box, ClickAwayListener, Typography } from "@mui/material";
-import MuiButton from "../ActionComp/MuiButton";
-import { OpenTo, type PaperUtilityOpenToProps } from "../../utility/paper";
+import MuiButton from "../../ActionComp/MuiButton";
+import { OpenTo, type PaperUtilityOpenToProps } from "../../../utility/paper";
 import { useRef, useState } from "react";
-import Paper from "../base/Paper";
-import EnhanceProfileCard from "../../utility/EnhanceProfileCard";
-import Resources from "../../utility/Resources";
-import AddProfile from "./AddProfile/AddProfile";
+import Paper from "../../base/Paper";
+import EnhanceProfileCard from "../../../utility/EnhanceProfileCard";
+import Resources from "../../../utility/Resources";
+import AddProfile from "../AddProfile/AddProfile";
 
 console.log(OpenTo)
 

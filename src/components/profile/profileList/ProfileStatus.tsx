@@ -1,9 +1,9 @@
 import { Box, Container, Typography } from "@mui/material";
 import type { User } from "firebase/auth";
 
-import MuiButton from "../ActionComp/MuiButton";
+import MuiButton from "../../ActionComp/MuiButton";
 import ProfileStatusFooter from "./ProfileStatusFooter";
-import CertificateLogo from "../../utility/CertificateLogo";
+import CertificateLogo from "../../../utility/CertificateLogo";
 
 type AuthProfileProps = {
   authUser: User | null;

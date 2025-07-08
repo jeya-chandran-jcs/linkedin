@@ -1,14 +1,14 @@
 import {Box} from '@mui/material'
 
-import ProfileUser from './ProfileUser';
-import ProfileAdd from './ProfileAdd';
-import Languages from './Languages';
-import Skills from './Skills';
-import Projects from './Projects';
-import License_Certification from './License_Certification';
-import Experience from './Experience';
-import Education from './Education';
-import About from './About';
+import ProfileUser from './profileList/ProfileUser';
+import ProfileAdd from './profileList/ProfileAdd';
+import Languages from './profileList/Languages';
+import Skills from './profileList/Skills';
+import Projects from './profileList/Projects';
+import License_Certification from './profileList/License_Certification';
+import Experience from './profileList/Experience';
+import Education from './profileList/Education';
+import About from './profileList/About';
 
 
 export default function ProfileContent() {

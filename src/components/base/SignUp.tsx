@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Input from "../ActionComp/Input";
 import LinkedInLogo from "./LinkedInLogo";
 import Button from "../ActionComp/Button";
@@ -16,17 +16,7 @@ export default function SignUp() {
     const [data, setData] = useState<SignUpProps>({ name: "", email: "", password: "" })
     const [exist,setExist]=useState<boolean | null>(null)
     const navigate = useNavigate()
-    useEffect(()=>{
-        const userExist=async()=>{
-            const response = await isUserExist(data.email)
-            setExist(response)
-        }
-        userExist()
-    },[])
-
-    console.log("signuo user exist",exist)
-    if(exist) return
-    
+  
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -50,7 +40,18 @@ export default function SignUp() {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         try {
+
+            const isEMailExist=await isUserExist(data.email)
+            setExist(isEMailExist)
+
+            if(isEMailExist)
+            {
+                console.log(isEMailExist,"exist")
+                alert("user already exist")
+                return
+            }
             e.preventDefault()
             const user = await googleRegister({ name: data.name, email: data.email, password: data.password })
             console.log("user registered succesfully ingoogle", user)

@@ -3,7 +3,7 @@ import type { MockDataProps } from "../../types/mockDataApi";
 import getData from "./getData";
 
 
-export default async function isUserExist(email:string) {
+export default async function isUserExist(email:string | null) {
     const user=await getData({API,message:"GET"})
 
     const isExist=user.find((userName:MockDataProps)=>userName.email===email)

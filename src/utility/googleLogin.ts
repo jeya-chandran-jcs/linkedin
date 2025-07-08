@@ -1,6 +1,9 @@
 import {  signInWithPopup } from "firebase/auth";
 import {auth} from "../config/google"
 import { GoogleAuthProvider } from "firebase/auth";
+import isUserExist from "./api/isUserExist";
+import postData from "./api/postData";
+import { API } from "../global";
 
 
 export default async function googleLogin() {
@@ -28,6 +31,18 @@ export default async function googleLogin() {
             photoUrl:user.photoURL,
             token:token
         }))
+        const isEmailExist=await isUserExist(user.email)
+        if(!isEmailExist)
+        {
+            const registerApi={
+                uid:user.uid,
+                name:user.displayName,
+                email:user.email,
+                photoUrl:user.photoURL
+            }
+            const postDataINMock=await postData({API,method:"POST",data:registerApi})
+            console.log("user register in mock api login with google pop up",postDataINMock)
+        }
         return user
     }
    catch (err: unknown) {

@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import MuiButton from "../ActionComp/MuiButton";
+import MuiButton from "../../ActionComp/MuiButton";
 
 
 export default function ProfileAdd() {

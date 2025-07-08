@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from '@mui/material'
-import { auth } from '../../config/google'
+import { auth } from '../../../config/google'
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import ProfileStatus from './ProfileStatus';

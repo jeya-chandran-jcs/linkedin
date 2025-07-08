@@ -79,7 +79,7 @@ const handleGoToTitle=(str:string)=>{
                         <List   sx={{margin:0}}>
                             {item.list.map((names, index)=>(
                                 
-                                <ListItem disableGutters sx={{py:0.5 , px:0, borderBottom:index !== item.list.length-1 && "1px solid #eee" ,}} key={index}>
+                                <ListItem disableGutters sx={{py:0.5 , px:0, borderBottom:index !== item.list.length-1 ? "1px solid #eee" : undefined ,}} key={index}>
                                     <ListItemText onClick={()=>handleGoToTitle(names.key)} primary={
                                         <Typography component="p"  sx={{'&:hover':{cursor:"pointer"},color: "#4B4B4B",fontSize:"0.9rem",fontWeight:400}}>
                                             {names.name}

@@ -1,5 +1,5 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
-import CertificateLogo from "../../utility/CertificateLogo";
+import CertificateLogo from "../../../utility/CertificateLogo";
 
 
 export default function Education() {

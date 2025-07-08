@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import Languages from "../Languages";
+import Languages from "../profileList/Languages";
 import AmazonAdd from "./AmazonAdd";
 import Viewers from "./Viewers";
 import { peopleSugg, viewers } from "../../../utility/viewers";
