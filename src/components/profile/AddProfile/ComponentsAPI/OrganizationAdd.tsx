@@ -1,6 +1,8 @@
+import { organizationData } from "../../../../utility/componentsApiEnhanceProfile/organizationData";
+import FormController from "./FromController";
 
 export default function OrganizationAdd() {
   return (
-    <div>OrganizationAdd</div>
+    <FormController formStructure={organizationData} title={"Add Organization"}/>
   )
 }

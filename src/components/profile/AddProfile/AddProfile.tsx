@@ -3,7 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, List, List
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { proficeAccordion } from "../../../utility/addProfile";
 import { startTransition, useState } from "react";
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 
 
 

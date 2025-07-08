@@ -1,6 +1,8 @@
+import { projectData } from "../../../../utility/componentsApiEnhanceProfile/projectData";
+import FormController from "./FromController";
 
 export default function ProjectAdd() {
   return (
-    <div>ProjectAdd</div>
+    <FormController formStructure={projectData} title={"Add Projects"}/>
   )
 }

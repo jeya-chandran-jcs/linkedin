@@ -1,30 +1,6 @@
+import { ProfileMonth, ProfileYear, type FromStructureGrouped } from "./AddProfileSupport";
 
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-export type Field = {
-  key: string;
-  label: string;
-  placeholder?: string;
-  type: "text" | "textArea" | "month" | "year";
-  values?:string[] | number[],
-  monthKey?:string,
-  yearkey?:string,
-  monthValues?:string[],
-  yearValues?:number[]
-};
-
-export type EducationSupportGrouped = {
-  [group: string]: {
-    title: string;
-    fields: Field[];
-  };
-};
-
-export const educationSupportEditedMonth:string[]=[
-  "january","feburary","march","april","may","june","july","august","september","octiber","november","december"
-]
-
-export const educationSupportEdited: EducationSupportGrouped = {
+export const educationSupportEdited: FromStructureGrouped = {
   header: {
     title: "School Info",
     fields: [
@@ -57,8 +33,8 @@ export const educationSupportEdited: EducationSupportGrouped = {
         type: "month",
         monthKey:"monthStart",
       yearkey:"yearStart",
-        monthValues:educationSupportEditedMonth,
-        yearValues:Array.from({length:10},(_,i)=>2025-i)
+        monthValues:ProfileMonth,
+        yearValues:ProfileYear
       },
       {
         key: "endDate",
@@ -66,8 +42,8 @@ export const educationSupportEdited: EducationSupportGrouped = {
         type: "month",
         monthKey:"monthEnd",
        yearkey:"yearEnd",
-        monthValues:educationSupportEditedMonth,
-        yearValues:Array.from({length:10},(_,i)=>2025-i)
+        monthValues:ProfileMonth,
+        yearValues:ProfileYear
       }
     ],
   },
