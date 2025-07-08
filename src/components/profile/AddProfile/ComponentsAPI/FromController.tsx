@@ -3,11 +3,13 @@ import TextFieldMui from "../../../ActionComp/TextFieldMui";
 import { useState } from "react";
 import MuiButton from "../../../ActionComp/MuiButton";
 import type { FromStructureGrouped } from "../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
+import type { MockDataProps } from "../../../../types/mockDataApi";
 
 
 type FromControllerProps = {
     formStructure: FromStructureGrouped,
-    title: string
+    title: string,
+    keyMessage?:keyof MockDataProps
 }
 
 export default function FormController({ formStructure, title }: FromControllerProps) {

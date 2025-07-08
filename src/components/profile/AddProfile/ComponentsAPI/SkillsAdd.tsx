@@ -1,8 +1,8 @@
 import { skillsData } from "../../../../utility/componentsApiEnhanceProfile/SkillData";
-import FormController from "./FromController";
+import ArrayController from "./ArrayController";
 
 export default function SkillsAdd() {
   return (
-    <FormController formStructure={skillsData} title={"ADD Skills"}/>
+    <ArrayController formStructure={skillsData} title={"ADD Skills"} keyMessage={"skill"}/>
   )
 }

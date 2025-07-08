@@ -38,7 +38,7 @@ export type MuiButtonProps={
     type:'button' | 'submit' | 'reset',
     variant:"text" | "outlined" | "contained",
     disabled?:boolean,
-    onClick?:()=>void,
+    onClick?:(e:React.MouseEvent<HTMLButtonElement>)=>void,
     color?:"primary" | "secondary" | "info" | "warning" | "success" | "error",
     size?:"small" | "medium" | "large",
     fullWidth?:boolean,

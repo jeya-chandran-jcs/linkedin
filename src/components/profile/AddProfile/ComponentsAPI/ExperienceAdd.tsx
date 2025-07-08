@@ -4,6 +4,6 @@ import FormController from "./FromController";
 
 export default function ExperienceAdd() {
     return (
-       <FormController formStructure={experienceSupportEdited} title={"Add Experience"}/>
+       <FormController formStructure={experienceSupportEdited} title={"Add Experience"} keyMessage={"experience"}/>
     )
 }

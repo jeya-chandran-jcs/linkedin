@@ -4,7 +4,7 @@ import FormController from "./FromController";
 
 export default function EducationAdd() {
   return (
-    <FormController formStructure={educationSupportEdited} title={"Add Education"} />
+    <FormController formStructure={educationSupportEdited} title={"Add Education"} keyMessage={"education"}/>
   )
 }
 

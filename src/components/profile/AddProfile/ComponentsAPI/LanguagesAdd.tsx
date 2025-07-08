@@ -1,8 +1,8 @@
 import { languageData } from "../../../../utility/componentsApiEnhanceProfile/languageData";
-import FormController from "./FromController";
+import ArrayController from "./ArrayController";
 
 export default function LanguagesAdd() {
   return (
-    <FormController formStructure={languageData} title={"Add Languages"}/>
+    <ArrayController formStructure={languageData} title={"Add Languages"} keyMessage={"language"}/>
   )
 }

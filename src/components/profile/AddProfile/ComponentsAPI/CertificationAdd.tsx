@@ -4,7 +4,8 @@ import { license_certification } from "../../../../utility/componentsApiEnhanceP
 
 
 export default function CertificationAdd() {
+  // keyMessage={"language"}
     return (
-      <FormController formStructure={license_certification} title={"Add License & Certification"}/>
+      <FormController formStructure={license_certification} title={"Add License & Certification"} keyMessage={"certification"}/>
     )
 }

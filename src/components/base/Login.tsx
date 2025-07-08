@@ -8,7 +8,7 @@ export default function Login() {
     const handleLogin=async()=>{
         try{
             await googleLogin()
-            navigate({to:"/home"})
+            navigate({to:"/user-profile"})
         }
         catch(err)
         {

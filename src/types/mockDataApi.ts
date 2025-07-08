@@ -14,7 +14,7 @@ export type MockDataProps={
     education:[],
     certification:[],
     projects:[],
-    skills:[],
+    skill:[],
     language:[],
     interest:[],
     connections:[],
