@@ -1,3 +1,18 @@
+export type OrganizationEntry = {
+  organizationName: string;
+  position: string;
+  associatedWith: string;
+  startDate: {
+    monthStart: string;
+    yearStart: string;
+  };
+  endDate: {
+    monthEnd: string;
+    yearEnd: string;
+  };
+  description: string;
+};
+
 export type MockDataProps={
     id:string,
     name:string,
@@ -19,5 +34,7 @@ export type MockDataProps={
     interest:[],
     connections:[],
     uid:string,
-    post:[]
+    post:[],
+    course:[],
+    organization:OrganizationEntry
 }

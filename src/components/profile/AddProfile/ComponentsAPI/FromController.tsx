@@ -1,19 +1,90 @@
-import { Box, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { Box, FormControl, MenuItem, Select, Typography, type SelectChangeEvent } from "@mui/material";
 import TextFieldMui from "../../../ActionComp/TextFieldMui";
-import { useState } from "react";
+import React, { useState } from "react";
 import MuiButton from "../../../ActionComp/MuiButton";
 import type { FromStructureGrouped } from "../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
 import type { MockDataProps } from "../../../../types/mockDataApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import getData from "../../../../utility/api/getData";
+import { API } from "../../../../global";
+import getCurrentUserId from "../../../../utility/getCurrentUserId";
+import postData from "../../../../utility/api/postData";
 
 
+type FormController = {
+     [key: string]: string 
+}
 type FromControllerProps = {
     formStructure: FromStructureGrouped,
     title: string,
     keyMessage?:keyof MockDataProps
 }
 
-export default function FormController({ formStructure, title }: FromControllerProps) {
-    const [formValues, setfromValues] = useState<{ [key: string]: string }>({})
+export default function FormController({ formStructure, title,keyMessage }: FromControllerProps) {
+    const [formValues, setfromValues] = useState<FormController >({})
+    const {data}=useQuery({
+        queryKey:["Form Controller profile"],
+        queryFn:()=>getData({API,message:"GET"})
+    })
+
+    const mutation=useMutation({
+        mutationFn:(newField:FormController[])=>postData({API:`${API}/${user?.id}`,method:"PUT",data:{[keyMessage as string]:newField}}),
+        onSuccess:(data)=>{
+            console.log("data added from form values",data)
+            alert("data added")
+        },
+        onError:(err)=>{
+            console.log("something went wrong while adding form values",err)
+            alert("failed")
+        }
+    })
+
+    if(!data) return
+     if(!keyMessage) 
+    {
+        return
+    }
+   
+    const user=getCurrentUserId(data)
+    // console.log("current user",user)
+    
+    const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
+        const {name,value}=e.target
+        setfromValues((prev)=>({...prev,[name]:value}))
+    }
+
+     const handleSelectChange=(e:SelectChangeEvent<string>)=>{
+        const {name,value}=e.target
+        setfromValues((prev)=>({...prev,[name]:value}))
+     }   
+
+    const handleSubmit=(e:React.MouseEvent<HTMLButtonElement>)=>{
+        e.preventDefault()
+
+        const allFields=[
+           ...(formStructure.header?.fields || []) ,
+           ...(formStructure.footer?.fields || [])
+        ]
+
+        const isAnyFieldEmpty=allFields.some((field)=>{
+            const value=formValues[field.key]
+            return !value || value.trim()===""
+        })
+
+        if(isAnyFieldEmpty)
+        {
+            alert("please fill all the fields")
+            return
+        }
+
+        const dataCheck=user?.[keyMessage]
+
+        const existingValues=Array.isArray(dataCheck) ? dataCheck as FormController[]:[]
+        const updateField=[...existingValues,formValues]
+        mutation.mutate(updateField)
+        console.log(updateField)
+        setfromValues({})
+    }
 
 
     return (
@@ -51,11 +122,11 @@ export default function FormController({ formStructure, title }: FromControllerP
                             {item.values ?
                                 <FormControl fullWidth sx={{ width: "100%", marginBottom: "10px" }} variant="outlined">
                                     <Select
+                                        name={item.key}
                                         displayEmpty
-                                        value={formValues[item.key || ""] ?? ""}
-                                        onChange={(e) => {
-                                            if (item.key) setfromValues({ ...formValues, [item.key]: e.target.value })
-                                        }}
+                                        // value={formValues[item.key || ""] ?? ""}
+                                        value={item.key ? formValues[item.key] ?? "" : ""}
+                                        onChange={handleSelectChange}
                                         renderValue={(selected) => {
                                             if (!selected) {
                                                 return <span className="text-gray-700 text-md">{item?.placeholder ? item.placeholder : "Please Choose"}</span>; // or Year
@@ -88,7 +159,7 @@ export default function FormController({ formStructure, title }: FromControllerP
                                 :
                                 <TextFieldMui fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}
                                     value={formValues[item.key] || ""}
-                                    handleChange={(e) => setfromValues({ ...formValues, [item.key]: e.target.value })}
+                                    handleChange={handleChange}
                                     sx={{
                                         '& .MuiOutlinedInput-root': {
 
@@ -133,11 +204,11 @@ export default function FormController({ formStructure, title }: FromControllerP
                                     <FormControl fullWidth sx={{ width: "50%", marginBottom: "10px" }} variant="outlined">
                                         <Typography color="textSecondary" sx={{ fontSize: "0.8rem" }}>{item.label}</Typography>
                                         <Select
+                                            name={item.monthKey}
                                             displayEmpty
                                             value={formValues[item.monthKey || ""] ?? ""}
-                                            onChange={(e) => {
-                                                if (item.monthKey) setfromValues({ ...formValues, [item.monthKey]: e.target.value })
-                                            }}
+                                            // value={item.monthKey ? formValues[item.monthKey] ?? "" : ""}
+                                            onChange={handleSelectChange}
                                             renderValue={(selected) => {
                                                 if (!selected) {
                                                     return <span className="text-gray-700 text-md">Month</span>; // or Year
@@ -175,11 +246,11 @@ export default function FormController({ formStructure, title }: FromControllerP
                                         {/* <InputLabel>Start Year</InputLabel> */}
 
                                         <Select
+                                            name={item.yearkey}
                                             displayEmpty
+                                            // value={item.yearkey ? formValues[item.yearkey] ?? "" : ""}
                                             value={item.yearkey ? formValues[item.yearkey] ?? "" : ""}
-                                            onChange={(e) => {
-                                                if (item.yearkey) setfromValues({ ...formValues, [item.yearkey]: e.target.value })
-                                            }}
+                                            onChange={handleSelectChange}
                                             renderValue={(selected) => {
                                                 if (!selected) {
                                                     return <span className="text-gray-700 text-md">Year</span>; // or Year
@@ -228,11 +299,11 @@ export default function FormController({ formStructure, title }: FromControllerP
                                     <FormControl fullWidth sx={{ width: "100%", marginBottom: "10px" }} variant="outlined">
                                         {/* <Typography color="textSecondary" sx={{ fontSize: "0.8rem" }}>{item.label}</Typography> */}
                                         <Select
+                                            name={item.key}
                                             displayEmpty
-                                            value={formValues[item.key || ""] ?? ""}
-                                            onChange={(e) => {
-                                                if (item.key) setfromValues({ ...formValues, [item.key]: e.target.value })
-                                            }}
+                                            // value={formValues[item.key || ""] ?? ""}
+                                            value={item.key ? formValues[item.key] ?? "" : ""}
+                                            onChange={handleSelectChange}
                                             renderValue={(selected) => {
                                                 if (!selected) {
                                                     return <span className="text-gray-700 text-md">{item.placeholder}</span>; // or Year
@@ -264,7 +335,7 @@ export default function FormController({ formStructure, title }: FromControllerP
                                     </FormControl>
                                 )
                                     :
-                                    <TextFieldMui value={formValues[item.key] || ""} handleChange={(e) => setfromValues(({ ...formValues, [item.key]: e.target.value }))} fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder} multiLine={item.type === "textArea"} minRow={item.type === "textArea" ? 3 : 1}
+                                    <TextFieldMui value={formValues[item.key] || ""} handleChange={handleChange} fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder} multiLine={item.type === "textArea"} minRow={item.type === "textArea" ? 3 : 1}
                                         sx={{
                                             '& .MuiOutlinedInput-root': {
 
@@ -303,7 +374,7 @@ export default function FormController({ formStructure, title }: FromControllerP
             </Box>
             {/* footer */}
             <Box sx={{ padding: "1rem", borderTop: "1px solid lightgray", display: "flex", justifyContent: "flex-end" }}>
-                <MuiButton text={"save"} type={"button"} variant={"contained"} color={"primary"} sx={{ borderRadius: "25px", padding: "4px 2px" }} onClick={() => console.log(formValues)} />
+                <MuiButton text={"save"} type={"button"} variant={"contained"} color={"primary"} sx={{ borderRadius: "25px", padding: "4px 2px" }} onClick={handleSubmit} />
             </Box>
 
         </Box>

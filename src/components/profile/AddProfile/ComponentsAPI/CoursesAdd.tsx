@@ -3,6 +3,6 @@ import { courseData } from '../../../../utility/componentsApiEnhanceProfile/cour
 
 export default function CoursesAdd() {
   return (
-    <FormController formStructure={courseData} title={"Add Course"}/>
+    <FormController formStructure={courseData} title={"Add Course"} keyMessage={"course"}/>
   )
 }
