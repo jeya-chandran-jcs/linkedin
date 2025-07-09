@@ -48,3 +48,10 @@ export type MuiButtonProps={
     sx?:SxProps<Theme>,
     ref?: React.Ref<HTMLButtonElement>
 }
+
+export type NavigationProps = {
+  goToNext?: () => void;
+  goToPrev?: () => void;
+  hasNext?: boolean;
+  hasPrev?: boolean;
+};

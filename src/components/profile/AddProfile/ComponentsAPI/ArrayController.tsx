@@ -1,82 +1,88 @@
-import { Box, FormControl, MenuItem, Select, Typography, type SelectChangeEvent } from "@mui/material";
+import { Box, Typography, type SelectChangeEvent } from "@mui/material";
 import TextFieldMui from "../../../ActionComp/TextFieldMui";
 import React, { useState } from "react";
 import MuiButton from "../../../ActionComp/MuiButton";
 import type { FromStructureGrouped } from "../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import getData from "../../../../utility/api/getData";
 import { API } from "../../../../global";
 import type { MockDataProps } from "../../../../types/mockDataApi";
 import postData from "../../../../utility/api/postData";
 import getCurrentUserId from "../../../../utility/getCurrentUserId";
+import MuiSelect from "../../../ActionComp/MuiSelect";
 
 
 type ArrayControllerProps = {
-     [key: string]: string 
+    [key: string]: string
 }
 
-type ArrayStructureGrouped={
-   formStructure:FromStructureGrouped,
-   title:string ,
-   keyMessage:keyof MockDataProps,
+type ArrayStructureGrouped = {
+    formStructure: FromStructureGrouped,
+    title: string,
+    keyMessage: keyof MockDataProps,
+    goToNext?: () => void,
+    goToPrev?: () => void,
+    hasNext?: boolean,
+    hasPrev?: boolean
 }
 
 
 
-export default function ArrayController({ formStructure, title ,keyMessage}: ArrayStructureGrouped) {
+export default function ArrayController({ formStructure, title, keyMessage, goToNext, goToPrev, hasNext, hasPrev }: ArrayStructureGrouped) {
     // const [formValues, setfromValues] = useState<ArrayControllerProps[]>([])
-    const [level,setLevel]=useState<ArrayControllerProps>({})
-    const {data}=useQuery({
-        queryKey:["array data"],
-        queryFn:()=>getData({API,message:"GET"})
+    const [level, setLevel] = useState<ArrayControllerProps>({})
+    const queryClient=useQueryClient()
+    const { data } = useQuery({
+        queryKey: ["array data"],
+        queryFn: () => getData({ API, message: "GET" })
     })
-    
-    const mutation=useMutation({
-        mutationFn:(newSkill:ArrayControllerProps[])=>postData({API:`${API}/${user?.id}`,method:"PUT",data:{[keyMessage]:newSkill}}),
-        onSuccess:(data)=>{
-            console.log("data added successfully",data)
+
+    const mutation = useMutation({
+        mutationFn: (newSkill: ArrayControllerProps[]) => postData({ API: `${API}/${user?.id}`, method: "PUT", data: { [keyMessage]: newSkill } }),
+        onSuccess: (data) => {
+            console.log("data added successfully", data)
             alert("data successfully added")
+            queryClient.invalidateQueries({ queryKey: ["array data"] });
         },
-        onError:(err)=>{
-            console.log("something went wrong",err)
+        onError: (err) => {
+            console.log("something went wrong", err)
             console.error(err)
         }
     })
 
-    if(!data) return
-    
-    const user=getCurrentUserId(data)
-    // const myUid=auth.currentUser?.uid
-    // const user=data.find((user:MockDataProps)=>user.uid===myUid)
-   
+    if (!data) return
 
-    const handleInputChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
-        const {name,value}=e.target
-        setLevel((prev)=>({...prev,[name]:value}))
+    const user = getCurrentUserId(data)
+
+
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setLevel((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handleSelectChange=(e:SelectChangeEvent<string>)=>{
-        const {name,value}=e.target
-        setLevel((prev)=>({...prev,[name]:String(value)}))
+    const handleSelectChange = (e: SelectChangeEvent<string>) => {
+        const { name, value } = e.target
+        setLevel((prev) => ({ ...prev, [name]: String(value) }))
     }
 
-    const handleSubmit=(e:React.MouseEvent<HTMLButtonElement>)=>{
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-  
-    const allFields = [
-        ...(formStructure.header?.fields || []),
-        ...(formStructure.footer?.fields || [])
-    ];
-    const isAnyFieldEmpty = allFields.some((field) => {
-        const value = level[field.key];
-        return !value || value.trim() === "";
-    });
-    if (isAnyFieldEmpty) {
-        return alert("Please fill all fields");
-    }
 
-        const existingValue:ArrayControllerProps[]=(user?.[keyMessage] as ArrayControllerProps[]) || []
-        const updatedArray=[...existingValue,level]
+        const allFields = [
+            ...(formStructure.header?.fields || []),
+            ...(formStructure.footer?.fields || [])
+        ];
+        const isAnyFieldEmpty = allFields.some((field) => {
+            const value = level[field.key];
+            return !value || value.trim() === "";
+        });
+        if (isAnyFieldEmpty) {
+            return alert("Please fill all fields");
+        }
+
+        const existingValue: ArrayControllerProps[] = (user?.[keyMessage] as ArrayControllerProps[]) || []
+        const updatedArray = [...existingValue, level]
         // setfromValues(updatedArray)
         mutation.mutate(updatedArray)
         setLevel({})
@@ -101,7 +107,7 @@ export default function ArrayController({ formStructure, title ,keyMessage}: Arr
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #D3D3D3", padding: "1rem" }}>
                 <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>{title}</Typography>
                 <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="#"></a>
+                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="/user-profile"></a>
 
                 </Box>
             </Box>
@@ -115,34 +121,34 @@ export default function ArrayController({ formStructure, title ,keyMessage}: Arr
                         <Box key={index}>
                             <Typography component="label" variant="subtitle2" color="textSecondary">{item.label}</Typography>
 
-                                <TextFieldMui fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}
-                                    value={level[item.key] || ""}
-                                    handleChange={handleInputChange}
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
+                            <TextFieldMui fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}
+                                value={level[item.key] || ""}
+                                handleChange={handleInputChange}
+                                sx={{
+                                    '& .MuiOutlinedInput-root': {
 
-                                            borderRadius: "4px",
-                                            fontSize: '14px',
-                                            backgroundColor: '#fff',
-                                            padding: '4px 2px',
-                                            '& input': {
-                                                padding: "3px 10px"
-                                            },
-                                            '& fieldset': {
-                                                border: "1.5px solid #808080"
-                                            },
-                                            '&:hover fieldset': {
-                                                border: '2px solid black',
-                                            },
-                                            '&.Mui-focused fieldset': {
+                                        borderRadius: "4px",
+                                        fontSize: '14px',
+                                        backgroundColor: '#fff',
+                                        padding: '4px 2px',
+                                        '& input': {
+                                            padding: "3px 10px"
+                                        },
+                                        '& fieldset': {
+                                            border: "1.5px solid #808080"
+                                        },
+                                        '&:hover fieldset': {
+                                            border: '2px solid black',
+                                        },
+                                        '&.Mui-focused fieldset': {
 
-                                                border: '2px solid black',
-                                            }
+                                            border: '2px solid black',
                                         }
-                                    }}
+                                    }
+                                }}
 
-                                />
-                            
+                            />
+
 
 
 
@@ -151,7 +157,7 @@ export default function ArrayController({ formStructure, title ,keyMessage}: Arr
                     ))
                 }
 
-               
+
 
 
                 {formStructure.footer && formStructure.footer.fields.length > 0 &&
@@ -159,42 +165,29 @@ export default function ArrayController({ formStructure, title ,keyMessage}: Arr
                         formStructure.footer.fields.map((item, index) => (
                             <Box key={index}>
                                 <Typography component="label" variant="subtitle2" color="textSecondary">{item.label}</Typography>
-                                    <FormControl fullWidth sx={{ width: "100%", marginBottom: "10px" }} variant="outlined">
-                                        {/* <Typography color="textSecondary" sx={{ fontSize: "0.8rem" }}>{item.label}</Typography> */}
-                                        <Select
-                                        name={item.key}
-                                            displayEmpty
-                                             value={level[item.key] || ""}
-                                            onChange={handleSelectChange}
-                                            renderValue={(selected) => {
-                                                if (!selected) {
-                                                    return <span className="text-gray-700 text-md">{item.placeholder}</span>; // or Year
-                                                }
-                                                return selected;
-                                            }}
-                                            sx={{
-                                                fontSize: "14px",
-                                                borderRadius: "4px",
-                                                backgroundColor: "#fff",
-                                                '& .MuiOutlinedInput-notchedOutline': {
-                                                    border: "1.5px solid #808080",
-                                                },
-                                                '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                    border: '2px solid black',
-                                                },
-                                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                    border: '2px solid black',
-                                                },
-                                                '& .MuiSelect-select': {
-                                                    padding: "6px 10px",
-                                                },
-                                            }}
-                                        >
-                                            {item.values?.map((m, i) => (
-                                                <MenuItem key={i} value={m}>{m}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
+                               
+                                <MuiSelect fullWidth={true} formSx={{ width: "100%", marginBottom: "10px" }} variant={"outlined"}
+                                    name={item.key} displayEmpty={true} value={level[item.key] || ""} values={item.values as string[]}
+                                    handleSelectChange={handleSelectChange} placeHolder={item.placeholder} 
+                                    selectSx={{
+                                            fontSize: "14px",
+                                            borderRadius: "4px",
+                                            backgroundColor: "#fff",
+                                            '& .MuiOutlinedInput-notchedOutline': {
+                                                border: "1.5px solid #808080",
+                                            },
+                                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                border: '2px solid black',
+                                            },
+                                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                border: '2px solid black',
+                                            },
+                                            '& .MuiSelect-select': {
+                                                padding: "6px 10px",
+                                            },
+                                        }}
+                                />
+                                
                             </Box>
 
                         ))
@@ -202,23 +195,60 @@ export default function ArrayController({ formStructure, title ,keyMessage}: Arr
                 }
 
                 {Array.isArray(user?.[keyMessage]) && user[keyMessage].length > 0 ? (
-  user[keyMessage].map((item: ArrayControllerProps, index: number) => (
-    <Box key={index} sx={{ padding: "4px 8px", borderBottom: "1px solid #e0e0e0" }}>
-      {Object.entries(item).map(([key, value]) => (
-        <Typography key={key} sx={{ fontSize: "0.9rem", color: "#333" }}>
-          <strong>{key}:</strong> {value}
-        </Typography>
-      ))}
-    </Box>
-  ))
-) : (
-  <Typography sx={{ color: "gray" }}>Your added data will show up here.</Typography>
-)}
+                    user[keyMessage].map((item: ArrayControllerProps, index: number) => (
+                        <Box key={index} sx={{ padding: "4px 8px", borderBottom: "1px solid #e0e0e0" }}>
+                            {Object.entries(item).map(([key, value]) => (
+                                <Typography key={key} sx={{ fontSize: "0.9rem", color: "#333" }}>
+                                    <strong>{key}:</strong> {value}
+                                </Typography>
+                            ))}
+                        </Box>
+                    ))
+                ) : (
+                    <Typography sx={{ color: "gray" }}>Your added data will show up here.</Typography>
+                )}
             </Box>
             {/* footer */}
-            <Box sx={{ padding: "1rem", borderTop: "1px solid lightgray", display: "flex", justifyContent: "flex-end" }}>
-                <MuiButton text={"save"} type={"button"} variant={"contained"} color={"primary"} sx={{ borderRadius: "25px", padding: "4px 2px" }} onClick={handleSubmit} />
+            <Box sx={{
+                padding: "1rem",
+                borderTop: "1px solid lightgray",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+            }}>
+                {/* Left Side */}
+                <Box sx={{ display: "flex", gap: 1 }}>
+                    <MuiButton
+                        text={"Previous"}
+                        type={"button"}
+                        variant={"outlined"}
+                        color="primary" // Changed to blue
+                        disabled={!hasPrev}
+                        onClick={goToPrev}
+                        sx={{ borderRadius: "25px", padding: "4px 16px" }}
+                    />
+                    <MuiButton
+                        text={"Next"}
+                        type={"button"}
+                        variant={"outlined"}
+                        color="primary" // Changed to blue
+                        disabled={!hasNext}
+                        onClick={goToNext}
+                        sx={{ borderRadius: "25px", padding: "4px 16px" }}
+                    />
+                </Box>
+
+                {/* Right Side */}
+                <MuiButton
+                    text={"Save"}
+                    type={"button"}
+                    variant={"contained"}
+                    color={"primary"} // Already blue
+                    sx={{ borderRadius: "25px", padding: "4px 24px" }}
+                    onClick={handleSubmit}
+                />
             </Box>
+
 
         </Box>
     )
