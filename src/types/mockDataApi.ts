@@ -22,6 +22,8 @@ export type MockDataProps={
     location:string,
     backgroundPic:string,
     profilePic:string,
+    profileIntro:string,
+    contact:[],
     links:[],
     about:string,
     featured:string,

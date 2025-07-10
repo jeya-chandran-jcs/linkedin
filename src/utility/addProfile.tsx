@@ -1,6 +1,11 @@
 import { lazy } from "react"
 
-export const addProfileCore = [
+export const addProfileCore = [ 
+  {
+    key:"profileintro",
+    name:"Add profile intro",
+    component:lazy(()=>import("../components/profile/AddProfile/ComponentsAPI/profileIntro/ProfileIntro"))
+  },
   {
     key: "education",
     name: "Add education",
@@ -20,23 +25,30 @@ export const addProfileCore = [
 
 export const addProfileRecommended = [
   {
-    key: "license",
-    name: "Add license & certifications",
-    component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/CertificationAdd"))
+    key:"contact",
+    name:"Contact Info",
+    component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/ContactInfo"))
   },
   {
     key: "projects",
     name: "Add projects",
     component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/ProjectAdd"))
   },
-  {
+   {
     key: "courses",
     name: "Add courses",
     component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/CoursesAdd"))
   },
+ 
 ]
 
 export const addProfileAdditional = [
+    {
+    key: "license",
+    name: "Add license & certifications",
+    component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/CertificationAdd"))
+  },
+
   {
     key: "languages",
     name: "Add languages",
@@ -47,6 +59,7 @@ export const addProfileAdditional = [
     name: "Add organizations",
     component: lazy(() => import("../components/profile/AddProfile/ComponentsAPI/OrganizationAdd"))
   },
+ 
 ]
 
 export const proficeAccordion=[

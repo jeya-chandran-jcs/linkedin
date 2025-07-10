@@ -147,7 +147,7 @@ export default function FormController({ formStructure, title, keyMessage, goToN
                                 />
 
                                 :
-                                <TextFieldMui fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}
+                                <TextFieldMui fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}  multiLine={item.type === "textArea"} minRow={item.type === "textArea" ? 3 : 1}
                                     value={formValues[item.key] || ""}
                                     handleChange={handleChange}
                                     sx={{
@@ -157,9 +157,12 @@ export default function FormController({ formStructure, title, keyMessage, goToN
                                             fontSize: '14px',
                                             backgroundColor: '#fff',
                                             padding: '4px 2px',
-                                            '& input': {
-                                                padding: "3px 10px"
-                                            },
+                                            '& input, & textarea': {
+                                                    padding: "6px 10px",
+                                                    fontFamily: 'inherit',
+                                                    fontSize: "14px",
+                                                    lineHeight: 1.5,
+                                                },
                                             '& fieldset': {
                                                 border: "1.5px solid #808080"
                                             },
@@ -277,43 +280,7 @@ export default function FormController({ formStructure, title, keyMessage, goToN
                                         },
                                     }}
                                 />
-                                    // <FormControl fullWidth sx={{ width: "100%", marginBottom: "10px" }} variant="outlined">
-                                        
-                                    //     <Select
-                                    //         name={item.key}
-                                    //         displayEmpty
-                                            
-                                    //         value={item.key ? formValues[item.key] ?? "" : ""}
-                                    //         onChange={handleSelectChange}
-                                    //         renderValue={(selected) => {
-                                    //             if (!selected) {
-                                    //                 return <span className="text-gray-700 text-md">{item.placeholder}</span>; // or Year
-                                    //             }
-                                    //             return selected;
-                                    //         }}
-                                    //         sx={{
-                                    //             fontSize: "14px",
-                                    //             borderRadius: "4px",
-                                    //             backgroundColor: "#fff",
-                                    //             '& .MuiOutlinedInput-notchedOutline': {
-                                    //                 border: "1.5px solid #808080",
-                                    //             },
-                                    //             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    //                 border: '2px solid black',
-                                    //             },
-                                    //             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    //                 border: '2px solid black',
-                                    //             },
-                                    //             '& .MuiSelect-select': {
-                                    //                 padding: "6px 10px",
-                                    //             },
-                                    //         }}
-                                    //     >
-                                    //         {item.values?.map((m, i) => (
-                                    //             <MenuItem key={i} value={m}>{m}</MenuItem>
-                                    //         ))}
-                                    //     </Select>
-                                    // </FormControl>
+                                  
                                 )
                                     :
                                     <TextFieldMui value={formValues[item.key] || ""} handleChange={handleChange} fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder} multiLine={item.type === "textArea"} minRow={item.type === "textArea" ? 3 : 1}

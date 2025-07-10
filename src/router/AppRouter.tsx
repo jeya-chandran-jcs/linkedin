@@ -64,6 +64,12 @@ const profileEditModalRoute=createRoute({
     component: ProfileEditModala,
 })
 
+const profileIntro=createRoute({
+    path:"edit/intro",
+    getParentRoute:()=>profileRoute,
+    component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/profileIntro/ProfileIntro"))
+})
+
 const routeTree=rootRoute.addChildren([
    notFoundRoute,
     loginRoute,
@@ -71,7 +77,8 @@ const routeTree=rootRoute.addChildren([
     signUpRoute,
     signInEmail,
     profileRoute.addChildren([
-        profileEditModalRoute
+        profileEditModalRoute,
+        profileIntro
     ]),
 ])
 

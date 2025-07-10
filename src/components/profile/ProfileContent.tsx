@@ -26,14 +26,14 @@ export default function ProfileContent() {
   }}
 >
   <ProfileUser />
-  <ProfileAdd />
-  <Languages />
-  <Skills />
-  <Projects />
-  <License_Certification />
-  <Experience />
-  <Education />
   <About />
+  <ProfileAdd />
+  <Education />
+  <Experience />
+  <Skills />
+   <Projects />
+   <License_Certification />
+  <Languages />
 </Box>
   )
 }

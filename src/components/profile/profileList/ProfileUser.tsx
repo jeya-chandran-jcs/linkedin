@@ -3,6 +3,7 @@ import { auth } from '../../../config/google'
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import ProfileStatus from './ProfileStatus';
+import { Link } from '@tanstack/react-router';
 
 
 export default function ProfileUser() {
@@ -39,7 +40,11 @@ export default function ProfileUser() {
         </Box>
         <Avatar src={pic} alt="https://i.pinimg.com/736x/cd/3e/d5/cd3ed5a95ef5ac1d694899a51798874b.jpg" sx={{width:150,height:150,objectFit:"contain",position:"absolute",left:"2rem" ,top:"16vh",border: "4px solid white",backgroundColor: "#f5f5f5",}}/>
         <ProfileStatus authUser={authUser}/>
-        <Typography component="a" variant='body1' sx={{width:'30px',padding:"20px",height:"30px",display:"flex",justifyContent:"center",alignItems:'center',transition:"background-color 0.3s ease-in-out",borderRadius:"50%",'&:hover':{color:"black", backgroundColor: '#f0f0f0',},position:"absolute",right:"2vw",top:"27vh"}}><i className="fa-solid fa-pencil"></i></Typography>
+        <Link to="edit/profileintro">
+                  <Typography component="p" variant='body1' sx={{width:'30px',padding:"20px",height:"30px",display:"flex",justifyContent:"center",alignItems:'center',transition:"background-color 0.3s ease-in-out",borderRadius:"50%",'&:hover':{color:"black", backgroundColor: '#f0f0f0',},position:"absolute",right:"2vw",top:"27vh"}}>
+                    <i  className="fa-solid fa-pencil"></i>
+                  </Typography>
+        </Link>
     </Box>
 
   )

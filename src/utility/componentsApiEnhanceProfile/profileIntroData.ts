@@ -1,7 +1,7 @@
 import { type FromStructureGrouped } from "./AddProfileSupport";
 
-export const introSupport: FromStructureGrouped = {
-  personal: {
+export const profileIntroSupport: FromStructureGrouped = {
+  header: {
     title: "Personal Information",
     fields: [
       {
@@ -17,34 +17,48 @@ export const introSupport: FromStructureGrouped = {
         type: "text",
       },
       {
-        key: "additionalName",
-        label: "Additional Name",
-        placeholder: "Ex. Nickname, maiden name",
-        type: "text",
-      },
-      {
         key: "pronouns",
         label: "Pronouns",
         placeholder: "He/Him",
         type: "text",
         values: ["He/Him", "She/Her", "They/Them", "Custom"],
       },
+      {
+        key: "headline",
+        label: "Headline",
+        placeholder: "ex: Full Stack Developer | MERN Stack ",
+        type: "text",
+      },
     ],
   },
-  professional: {
+  body: {
     title: "Professional Info",
     fields: [
       {
-        key: "currentPosition",
+        key: "experience",
         label: "Current Position",
         placeholder: "Add new position",
-        type: "text",
+        type: "suggestion",
+        link: "/user-profile/edit/experience"
       },
       {
         key: "industry",
         label: "Industry",
         placeholder: "Software Development",
         type: "text",
+      },
+      {
+        key: "higherEducation",
+        label: "Where did you recently get certified or educated?",
+        placeholder: "e.g., Udemy, Coursera, College Name",
+        type: "text",
+      },
+      {
+        key:"education",
+        label:"Eduaction or course",
+        placeholder:"Higher eduation or Course",
+        type:"suggestion",
+        link:"/user-profile/edit/education"
       },
     ],
   },
@@ -63,15 +77,22 @@ export const introSupport: FromStructureGrouped = {
         placeholder: "Bengaluru, Karnataka",
         type: "text",
       },
+     
     ],
   },
-  contact: {
-    title: "Contact Info",
+  footer: {
+    title: "Website",
     fields: [
       {
-        key: "portfolioLink",
-        label: "Portfolio Link",
-        placeholder: "https://jeya-chandran-portfolio.netlify.app/",
+        key:"contactInfo",
+        label:"Contact info",
+        placeholder:"Add or edit your profile URL, email, and more",
+        type:"suggestion"
+      },
+      {
+        key: "link",
+        label: "Link",
+        placeholder:"https://jeya-chandran-portfolio.netlify.app/",
         type: "text",
       },
       {
@@ -83,3 +104,4 @@ export const introSupport: FromStructureGrouped = {
     ],
   },
 };
+ 

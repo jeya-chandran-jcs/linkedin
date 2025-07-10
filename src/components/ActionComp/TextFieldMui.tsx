@@ -10,7 +10,8 @@ type MuiInputProps={
     minRow?:number,
     value:string ,
     handleChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void,
-    sx?:SxProps
+    sx?:SxProps,
+    
 }
 
 

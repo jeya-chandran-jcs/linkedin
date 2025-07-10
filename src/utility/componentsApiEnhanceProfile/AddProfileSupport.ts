@@ -5,12 +5,13 @@ export type Field = {
   key: string;
   label: string;
   placeholder?: string;
-  type: "text" | "textArea" | "month" | "year" |"array";
+  type: "text" | "textArea" | "month" | "year" |"array" | "Edit Contact info" | "suggestion" | "BirthDate";
   values?:string[] | number[],
   monthKey?:string,
   yearkey?:string,
   monthValues?:string[],
-  yearValues?:number[]
+  yearValues?:number[],
+  link?:string
 };
 
 export type FromStructureGrouped = {
