@@ -4,13 +4,15 @@ import type { User } from "firebase/auth";
 import MuiButton from "../../ActionComp/MuiButton";
 import ProfileStatusFooter from "./ProfileStatusFooter";
 import CertificateLogo from "../../../utility/CertificateLogo";
+import { Link } from "@tanstack/react-router";
+import Pen from "../../../utility/icons/Pen";
 
 type AuthProfileProps = {
   authUser: User | null;
 };
 
 export default function ProfileStatus({ authUser }: AuthProfileProps) {
-  console.log(authUser);
+  // console.log(authUser);
   return (
     <Container
       sx={{
@@ -18,7 +20,7 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
         marginTop: "6vh",
         display: "flex",
         flexDirection: "column",
-        padding:"1rem"
+        padding: "1rem"
       }}
       disableGutters
       maxWidth={false}
@@ -91,25 +93,25 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             Responsive Design
           </Typography>
           <Box>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-              component="p"
-            >
+            <Typography color="text.secondary" variant="body2" component="p">
               Bengaluru, Karnataka, India •
-              <Typography
-                component="a"
-                variant="body1"
-                href="#"
-                color="primary"
-                sx={{
-                  fontWeight: "600",
+              <Link
+                to="/user-profile/edit/contact"
+                style={{
+                  fontWeight: 600,
                   paddingLeft: "0.3rem",
-                  "&:hover": { textDecoration: "underline" },
+                  color: "#1976d2", // same as theme.palette.primary.main
+                  textDecoration: "none",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.textDecoration = "underline";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.textDecoration = "none";
                 }}
               >
                 Contact info
-              </Typography>
+              </Link>
             </Typography>
           </Box>
 
@@ -125,7 +127,7 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             }}
           >
             Portfolio
-            <i className="fa-solid fa-arrow-up-right-from-square"></i>
+            <Pen symbol="arrow-up-right-from-square" />
           </Typography>
           <Typography
             color="primary"
@@ -142,19 +144,19 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
           sx={{
             width: "35%",
             padding: "10px",
-            display:"flex",
+            display: "flex",
             // justifyContent:"flex-start",
             // alignItems:"flex-start",
-            gap:"1rem"
+            gap: "1rem"
           }}
         >
-          <CertificateLogo height={50} width={85}/>
-          <Typography component="a" variant="body2" sx={{fontWeight:"500"}} >GUVI Geek Networks, IIT-M Incubated Company</Typography>
+          <CertificateLogo height={50} width={85} />
+          <Typography component="a" variant="body2" sx={{ fontWeight: "500" }} >GUVI Geek Networks, IIT-M Incubated Company</Typography>
         </Box>
       </Box>
 
       {/* Footer section that spans full width */}
-      <Box sx={{ backgroundColor: "white",  }}>
+      <Box sx={{ backgroundColor: "white", }}>
         <ProfileStatusFooter />
       </Box>
     </Container>

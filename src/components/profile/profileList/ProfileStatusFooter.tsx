@@ -6,8 +6,7 @@ import Paper from "../../base/Paper";
 import EnhanceProfileCard from "../../../utility/EnhanceProfileCard";
 import Resources from "../../../utility/Resources";
 import AddProfile from "../AddProfile/AddProfile";
-
-console.log(OpenTo)
+import Pen from "../../../utility/icons/Pen";
 
 type ShowProps={
     openTo:boolean,
@@ -182,7 +181,7 @@ export default function ProfileStatusFooter() {
         <Box sx={{backgroundColor:"#D6E7F3",width:"80%",borderRadius:"8px",padding:"0.7rem 0.9rem",display:"flex",marginY:"1rem",flexDirection:"column",gap:"0.2rem"}}> 
             <Box sx={{display:"flex",justifyContent:"space-between"}}>
                 <Typography variant="body1" component="p">Open to work</Typography>
-                <i className="fa-solid fa-pencil"></i>
+                   <Pen symbol="pencil"/>
             </Box>
             <Typography variant="body2" sx={{textWrap:"wrap"}}>Full-stack Developer, Frontend Developer, Back End Developer and Software Developer roles,</Typography>
             <Typography variant="body2" component="a" color="primary" sx={{fontWeight:"bold"}}>Show details</Typography>

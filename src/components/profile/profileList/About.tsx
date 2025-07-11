@@ -1,6 +1,7 @@
 import { Box, Stack, Typography, Modal } from "@mui/material";
 import { useState } from "react";
 import ModalAbout from "../../../utility/subProfilecomp/ModalAbout";
+import { AboutData } from "../../../utility/componentsApiEnhanceProfile/AboutData";
 
 
 export default function About() {
@@ -23,22 +24,22 @@ export default function About() {
                 <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center", position: "relative" }}>
                     <i onClick={() => setShow(prev => !prev)} className="fa-solid fa-pen font-bold text-lg text-gray-600"></i>
                 </Box>
-               <Modal open={show} onClose={() => setShow(false)}>
-  <Box
-    sx={{
-      marginTop: "5rem",
-      backgroundColor: "#fff",
-      borderRadius: "8px",
-      width: "100%",
-      maxWidth: "40%",
-      marginX: "auto",
-      boxShadow: 24,
-      outline: "none",
-    }}
-  >
-    <ModalAbout handleClose={()=>setShow(false)}/>
-  </Box>
-</Modal>
+                <Modal open={show} onClose={() => setShow(false)}>
+                    <Box
+                        sx={{
+                            marginTop: "5rem",
+                            backgroundColor: "#fff",
+                            borderRadius: "8px",
+                            width: "100%",
+                            maxWidth: "40%",
+                            marginX: "auto",
+                            boxShadow: 24,
+                            outline: "none",
+                        }}
+                    >
+                        <ModalAbout handleClose={() => setShow(false)} singleFieldStructure={AboutData} multiLine={true} minRow={5} />
+                    </Box>
+                </Modal>
 
             </Box>
 

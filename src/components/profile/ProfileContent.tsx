@@ -9,9 +9,23 @@ import License_Certification from './profileList/License_Certification';
 import Experience from './profileList/Experience';
 import Education from './profileList/Education';
 import About from './profileList/About';
+import { useQuery } from '@tanstack/react-query';
+import getData from '../../utility/api/getData';
+import { API } from '../../global';
+import getCurrentUserId from '../../utility/getCurrentUserId';
 
 
 export default function ProfileContent() {
+  
+  const {data}=useQuery({
+    queryKey:["all users"],
+    queryFn:()=>getData({API,message:"GET"})
+  })
+  if(!data) return
+  console.log("sef")
+  const user=getCurrentUserId(data)
+  console.log(user)
+
   
   return (
    <Box
