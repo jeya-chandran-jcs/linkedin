@@ -1,4 +1,4 @@
-import { createRoute,createRootRoute, createRouter,RouterProvider,Outlet,lazyRouteComponent } from "@tanstack/react-router";
+import { createRoute,createRootRoute, createRouter,RouterProvider,Outlet,lazyRouteComponent, Navigate } from "@tanstack/react-router";
 import Navbar from "../components/base/Navbar";
 import Footer from "../components/base/Footer";
 import ProfileEditModala from "../components/profile/AddProfile/ComponentsAPI/ProfileEditModala";
@@ -15,6 +15,12 @@ const rootRoute=createRootRoute({
         </div>
     )
 })
+
+const indexRouter = createRoute({
+  path: "/",
+  getParentRoute: () => rootRoute,
+  component: () => <Navigate to="/login" />,
+});
 
 const loginRoute=createRoute({
     path:"/login",
@@ -78,6 +84,7 @@ const profileIntro=createRoute({
 // })
 
 const routeTree=rootRoute.addChildren([
+    indexRouter,
    notFoundRoute,
     loginRoute,
     homeRoute,
