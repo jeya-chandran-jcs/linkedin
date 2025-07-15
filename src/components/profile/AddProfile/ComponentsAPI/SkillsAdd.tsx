@@ -1,6 +1,6 @@
 import type { NavigationProps } from "../../../../types/action";
 import { skillsData } from "../../../../utility/componentsApiEnhanceProfile/SkillData";
-import ArrayController from "./ArrayController";
+import ArrayController from "./controller/ArrayController";
 
 export default function SkillsAdd({ goToNext, goToPrev, hasNext, hasPrev }: NavigationProps) {
   return (

@@ -1,15 +1,15 @@
 import { Box, Typography, type SelectChangeEvent } from "@mui/material";
-import TextFieldMui from "../../../ActionComp/TextFieldMui";
+import TextFieldMui from "../../../../ActionComp/TextFieldMui";
 import React, { useState } from "react";
-import MuiButton from "../../../ActionComp/MuiButton";
-import type { FromStructureGrouped } from "../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
+import MuiButton from "../../../../ActionComp/MuiButton";
+import type { FromStructureGrouped } from "../../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import getData from "../../../../utility/api/getData";
-import { API } from "../../../../global";
-import type { MockDataProps } from "../../../../types/mockDataApi";
-import postData from "../../../../utility/api/postData";
-import getCurrentUserId from "../../../../utility/getCurrentUserId";
-import MuiSelect from "../../../ActionComp/MuiSelect";
+import getData from "../../../../../utility/api/getData";
+import { API } from "../../../../../global";
+import type { MockDataProps } from "../../../../../types/mockDataApi";
+import postData from "../../../../../utility/api/postData";
+import getCurrentUserId from "../../../../../utility/getCurrentUserId";
+import MuiSelect from "../../../../ActionComp/MuiSelect";
 
 
 type ArrayControllerProps = {
@@ -31,7 +31,7 @@ type ArrayStructureGrouped = {
 export default function ArrayController({ formStructure, title, keyMessage, goToNext, goToPrev, hasNext, hasPrev }: ArrayStructureGrouped) {
     // const [formValues, setfromValues] = useState<ArrayControllerProps[]>([])
     const [level, setLevel] = useState<ArrayControllerProps>({})
-    const queryClient=useQueryClient()
+    const queryClient = useQueryClient()
     const { data } = useQuery({
         queryKey: ["array data"],
         queryFn: () => getData({ API, message: "GET" })
@@ -107,7 +107,7 @@ export default function ArrayController({ formStructure, title, keyMessage, goTo
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #D3D3D3", padding: "1rem" }}>
                 <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>{title}</Typography>
                 <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="/user-profile"></a>
+                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="../"></a>
 
                 </Box>
             </Box>
@@ -165,37 +165,37 @@ export default function ArrayController({ formStructure, title, keyMessage, goTo
                         formStructure.footer.fields.map((item, index) => (
                             <Box key={index}>
                                 <Typography component="label" variant="subtitle2" color="textSecondary">{item.label}</Typography>
-                               
+
                                 <MuiSelect fullWidth={true} formSx={{ width: "100%", marginBottom: "10px" }} variant={"outlined"}
                                     name={item.key} displayEmpty={true} value={level[item.key] || ""} values={item.values as string[]}
-                                    handleSelectChange={handleSelectChange} placeHolder={item.placeholder} 
+                                    handleSelectChange={handleSelectChange} placeHolder={item.placeholder}
                                     selectSx={{
-                                            fontSize: "14px",
-                                            borderRadius: "4px",
-                                            backgroundColor: "#fff",
-                                            '& .MuiOutlinedInput-notchedOutline': {
-                                                border: "1.5px solid #808080",
-                                            },
-                                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                border: '2px solid black',
-                                            },
-                                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                border: '2px solid black',
-                                            },
-                                            '& .MuiSelect-select': {
-                                                padding: "6px 10px",
-                                            },
-                                        }}
+                                        fontSize: "14px",
+                                        borderRadius: "4px",
+                                        backgroundColor: "#fff",
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            border: "1.5px solid #808080",
+                                        },
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            border: '2px solid black',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            border: '2px solid black',
+                                        },
+                                        '& .MuiSelect-select': {
+                                            padding: "6px 10px",
+                                        },
+                                    }}
                                 />
-                                
+
                             </Box>
 
                         ))
                     )
                 }
 
-                {Array.isArray(user?.[keyMessage]) && user[keyMessage].length > 0 ? (
-                    user[keyMessage].map((item: ArrayControllerProps, index: number) => (
+                {Array.isArray(user?.[keyMessage]) && (user?.[keyMessage] as ArrayControllerProps[]).length > 0 ? (
+                    (user?.[keyMessage] as ArrayControllerProps[]).map((item, index) => (
                         <Box key={index} sx={{ padding: "4px 8px", borderBottom: "1px solid #e0e0e0" }}>
                             {Object.entries(item).map(([key, value]) => (
                                 <Typography key={key} sx={{ fontSize: "0.9rem", color: "#333" }}>

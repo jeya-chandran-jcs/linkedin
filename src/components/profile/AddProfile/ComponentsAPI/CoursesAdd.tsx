@@ -1,4 +1,4 @@
-import FormController from './FromController'
+import FormController from './controller/FromController'
 import { courseData } from '../../../../utility/componentsApiEnhanceProfile/courseData'
 import type { NavigationProps } from '../../../../types/action'
 

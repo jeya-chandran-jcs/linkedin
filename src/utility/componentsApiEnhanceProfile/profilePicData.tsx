@@ -20,7 +20,7 @@ export type SingleFieldProps={
 export const profilePicData:SingleFieldProps = {
   header: {
     title: "Edit Profile Pic",
-    dataKey:'profilePic',
+    dataKey:'photoUrl',
     fields: [
       {
         key: "profilePic",

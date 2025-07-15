@@ -1,6 +1,6 @@
 import type { NavigationProps } from "../../../../types/action";
 import { contactSupport } from "../../../../utility/componentsApiEnhanceProfile/contactData";
-import FormController from "./FromController";
+import FormController from "./controller/FromController";
 
 
 export default function ContactInfo({ goToNext, goToPrev, hasNext, hasPrev }: NavigationProps) {

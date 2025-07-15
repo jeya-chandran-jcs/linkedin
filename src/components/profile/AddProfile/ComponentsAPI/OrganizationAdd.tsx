@@ -1,6 +1,6 @@
 import type { NavigationProps } from "../../../../types/action";
 import { organizationData } from "../../../../utility/componentsApiEnhanceProfile/organizationData";
-import FormController from "./FromController";
+import FormController from "./controller/FromController";
 
 export default function OrganizationAdd({ goToNext, goToPrev, hasNext, hasPrev }: NavigationProps) {
   return (

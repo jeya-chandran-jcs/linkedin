@@ -1,17 +1,17 @@
 import { Box, Container, Typography } from "@mui/material";
-import type { User } from "firebase/auth";
-
 import MuiButton from "../../ActionComp/MuiButton";
 import ProfileStatusFooter from "./ProfileStatusFooter";
 import CertificateLogo from "../../../utility/CertificateLogo";
-import { Link } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import Pen from "../../../utility/icons/Pen";
+import type { MockDataProps } from "../../../types/mockDataApi";
 
 type AuthProfileProps = {
-  authUser: User | null;
+  authUser: MockDataProps;
 };
 
 export default function ProfileStatus({ authUser }: AuthProfileProps) {
+  const {id}=useParams({from: "/user-profile/$id"})
   // console.log(authUser);
   return (
     <Container
@@ -25,14 +25,14 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
       disableGutters
       maxWidth={false}
     >
-      {/* Main content section: left & right */}
+      {/*  left & right */}
       <Box
         sx={{
           display: "flex",
           width: "100%",
         }}
       >
-        {/* Left content box */}
+        {/* Left box */}
         <Box
           sx={{
             backgroundColor: "white",
@@ -47,10 +47,10 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
           {/* head section */}
           <Box sx={{ display: "flex", gap: "0.7rem", alignItems: "center" }}>
             <Typography variant="h6" component="h6">
-              {authUser?.displayName}
+              {authUser?.name}
             </Typography>
             <Typography variant="body2" component="p" color="text.secondary">
-              He / Him
+              {authUser?.profileIntro?.pronouns}
             </Typography>
             <MuiButton
               type={"button"}
@@ -87,20 +87,19 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             />
           </Box>
 
-          {/* middle section */}
+          {/* middle */}
           <Typography variant="body1" component="p" sx={{ textWrap: "wrap" }}>
-            Full Stack Developer | MERN Stack | Enthusiast of Bootstrap &
-            Responsive Design
+            {authUser?.profileIntro?.headline}
           </Typography>
           <Box>
             <Typography color="text.secondary" variant="body2" component="p">
-              Bengaluru, Karnataka, India •
+              {authUser?.profileIntro?.city} - {authUser?.profileIntro?.country}
               <Link
-                to="/user-profile/edit/contact"
+                to={`/user-profile/${id}/edit/contact`}
                 style={{
                   fontWeight: 600,
                   paddingLeft: "0.3rem",
-                  color: "#1976d2", // same as theme.palette.primary.main
+                  color: "#1976d2",
                   textDecoration: "none",
                 }}
                 onMouseEnter={(e) => {
@@ -115,31 +114,32 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             </Typography>
           </Box>
 
-          <Typography
-            color="primary"
-            variant="body2"
-            component="a"
-            sx={{
-              fontWeight: "900",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
-          >
-            Portfolio
-            <Pen symbol="arrow-up-right-from-square" />
-          </Typography>
+          <Link to={authUser?.profileIntro?.link}>
+            <Typography
+              color="primary"
+              variant="body2"
+              sx={{
+                fontWeight: "900",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              {authUser?.profileIntro?.linkText}
+              <Pen symbol="arrow-up-right-from-square" />
+            </Typography>
+          </Link>
           <Typography
             color="primary"
             variant="body2"
             component="a"
             sx={{ fontWeight: "900" }}
           >
-            49 connections
+            {authUser?.connections.length} connections
           </Typography>
         </Box>
 
-        {/* Right box: only aligned with the name-to-connection area */}
+        {/* Right box */}
         <Box
           sx={{
             width: "35%",
@@ -151,11 +151,11 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
           }}
         >
           <CertificateLogo height={50} width={85} />
-          <Typography component="a" variant="body2" sx={{ fontWeight: "500" }} >GUVI Geek Networks, IIT-M Incubated Company</Typography>
+          <Typography component="a" variant="body2" sx={{ fontWeight: "500" }} >{authUser?.profileIntro?.higherEducation}</Typography>
         </Box>
       </Box>
 
-      {/* Footer section that spans full width */}
+      {/* Footer  */}
       <Box sx={{ backgroundColor: "white", }}>
         <ProfileStatusFooter />
       </Box>

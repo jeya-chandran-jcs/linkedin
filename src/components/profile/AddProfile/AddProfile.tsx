@@ -26,7 +26,7 @@ export default function AddProfile({ onClick }: EnhancedProfileProps) {
 const handleGoToTitle=(str:string)=>{
     onClick()
     startTransition(()=>{
-         navigate({to:"/user-profile/edit/$section",
+         navigate({to:"edit/$section",
         params:{section:str}
     })
     })

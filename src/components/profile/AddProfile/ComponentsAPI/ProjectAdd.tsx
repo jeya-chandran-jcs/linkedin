@@ -1,6 +1,6 @@
 import type { NavigationProps } from "../../../../types/action";
 import { projectData } from "../../../../utility/componentsApiEnhanceProfile/projectData";
-import FormController from "./FromController";
+import FormController from "./controller/FromController";
 
 export default function ProjectAdd({ goToNext, goToPrev, hasNext, hasPrev }: NavigationProps) {
   return (

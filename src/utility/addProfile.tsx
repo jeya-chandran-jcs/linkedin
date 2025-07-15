@@ -4,7 +4,7 @@ export const addProfileCore = [
   {
     key:"profileintro",
     name:"Add profile intro",
-    component:lazy(()=>import("../components/profile/AddProfile/ComponentsAPI/profileIntro/ProfileIntro"))
+    component:lazy(()=>import("../components/profile/AddProfile/ComponentsAPI/ProfileIntro"))
   },
   {
     key: "education",

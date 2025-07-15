@@ -1,15 +1,15 @@
 import { Box, Typography, type SelectChangeEvent } from "@mui/material";
-import TextFieldMui from "../../../ActionComp/TextFieldMui";
+import TextFieldMui from "../../../../ActionComp/TextFieldMui";
 import React, { useState } from "react";
-import MuiButton from "../../../ActionComp/MuiButton";
-import type { FromStructureGrouped } from "../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
-import type { MockDataProps } from "../../../../types/mockDataApi";
+import MuiButton from "../../../../ActionComp/MuiButton";
+import type { FromStructureGrouped } from "../../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
+import type { MockDataProps } from "../../../../../types/mockDataApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import getData from "../../../../utility/api/getData";
-import { API } from "../../../../global";
-import getCurrentUserId from "../../../../utility/getCurrentUserId";
-import postData from "../../../../utility/api/postData";
-import MuiSelect from "../../../ActionComp/MuiSelect";
+import getData from "../../../../../utility/api/getData";
+import { API } from "../../../../../global";
+import getCurrentUserId from "../../../../../utility/getCurrentUserId";
+import postData from "../../../../../utility/api/postData";
+import MuiSelect from "../../../../ActionComp/MuiSelect";
 
 
 type FormController = {
@@ -108,7 +108,7 @@ export default function FormController({ formStructure, title, keyMessage, goToN
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #D3D3D3", padding: "1rem" }}>
                 <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>{title}</Typography>
                 <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="/user-profile"></a>
+                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="../"></a>
 
                 </Box>
             </Box>

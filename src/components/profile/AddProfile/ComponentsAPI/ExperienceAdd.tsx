@@ -1,6 +1,6 @@
 import type { NavigationProps } from "../../../../types/action";
 import { experienceSupportEdited } from "../../../../utility/componentsApiEnhanceProfile/Experience";
-import FormController from "./FromController";
+import FormController from "./controller/FromController";
 
 
 export default function ExperienceAdd({ goToNext, goToPrev, hasNext, hasPrev }: NavigationProps) {

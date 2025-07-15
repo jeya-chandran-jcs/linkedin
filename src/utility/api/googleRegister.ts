@@ -32,7 +32,7 @@ export default async function googleRegister({name,email,password}:RegisterProps
         }
         const postDataINMock=await postData({API,method:"POST",data:registerAPI})
         console.log("data posted in google register with " , postDataINMock)
-
+        
         const token=await user.getIdToken()
         return {
            uid: user.uid,

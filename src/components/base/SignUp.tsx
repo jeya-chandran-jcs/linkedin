@@ -29,7 +29,7 @@ export default function SignUp() {
         try {
             const user = await googleLogin()
             console.log("regiestered successfully", user)
-            navigate({ to: "/user-profile" })
+            navigate({ to: `/user-profile/${user}` })
         }
         catch (err: unknown) {
             if (err instanceof Error) {
@@ -55,7 +55,7 @@ export default function SignUp() {
             e.preventDefault()
             const user = await googleRegister({ name: data.name, email: data.email, password: data.password })
             console.log("user registered succesfully ingoogle", user)
-            if(!exist) navigate({ to: "/user-profile" })
+            navigate({to:"/login"})
         }
         catch (err: unknown) {
             if (err instanceof Error) {

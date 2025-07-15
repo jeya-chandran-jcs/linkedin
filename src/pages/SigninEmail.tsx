@@ -11,6 +11,7 @@ import MuiButton from '../components/ActionComp/MuiButton'
 import type { MockDataProps } from '../types/mockDataApi'
 import googleAuthLogin from '../utility/api/googleAuthLogin'
 import { FirebaseError } from 'firebase/app'
+import isUserExist from '../utility/api/isUserExist'
 
 type SignInProps = Pick<MockDataProps, "email" | "password">
 
@@ -21,8 +22,8 @@ export default function SigninEmail() {
 
   const handleLogin = async () => {
     try {
-      await googleLogin()
-      navigate({ to: "/user-profile" })
+      const user = await googleLogin()
+      navigate({ to: `/user-profile/${user}` })
     }
     catch (err) {
       if (err instanceof FirebaseError) {
@@ -49,8 +50,12 @@ export default function SigninEmail() {
     try {
       const result = await googleAuthLogin({ email: data.email, password: data.password });
       console.log(result)
-      if (result) navigate({ to: "/user-profile" });
-      else console.error("error in sign in with only email and p");
+      const userId = await isUserExist(data.email)
+      if (!userId) {
+        alert("no data of this email is found please register or login with google")
+        return
+      }
+      if (userId && result) navigate({ to: `/user-profile/${userId}` });
     }
     catch (err: unknown) {
       if (err instanceof Error) {

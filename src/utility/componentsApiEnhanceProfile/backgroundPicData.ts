@@ -5,7 +5,7 @@ import type { SingleFieldProps } from "./profilePicData";
 export const BackGroundPicData:SingleFieldProps = {
   header: {
     title: "Edit BackGround Pic",
-    dataKey:"backGroundPic,",
+    dataKey:"backGroundPic",
     fields: [
       {
         key: "backGroundPic",

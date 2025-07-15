@@ -8,7 +8,7 @@ export default function ProfileEditModala() {
     const navigate = useNavigate();
 
     const handleClose = () => {
-        navigate({ to: "/user-profile" });
+        navigate({ to: "../.." });
     };
 
     const allItems = proficeAccordion.flatMap(item => item.list);
@@ -24,7 +24,7 @@ export default function ProfileEditModala() {
       if(hasNext)
       {
         navigate({
-          to:"/user-profile/edit/$section",
+          to:"../$section",
           params:{section:allItems[currentIndex+1].key}
         })
       }
@@ -33,7 +33,7 @@ export default function ProfileEditModala() {
     const goToPrev=()=>{
       if(hasPrev)
       {
-        navigate({to:"/user-profile/edit/$section",
+        navigate({to:"../$section",
           params:{section:allItems[currentIndex-1].key}
         })
       }

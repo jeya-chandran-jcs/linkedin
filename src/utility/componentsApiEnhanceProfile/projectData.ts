@@ -25,19 +25,19 @@ export const projectData: FromStructureGrouped = {
         key: "startDate",
         label: "Start date",
         type: "month",
-        monthKey: "startMonth",
-        yearkey: "startYear",
+        monthKey: "monthStart",
+        yearkey: "yearStart",
         monthValues: ProfileMonth,
-        yearValues:ProfileYear
+        yearValues: ProfileYear
       },
       {
         key: "endDate",
         label: "End date",
         type: "month",
-        monthKey: "endMonth",
-        yearkey: "endYear",
+        monthKey: "monthEnd",
+        yearkey: "yearEnd",
         monthValues: ProfileMonth,
-        yearValues:ProfileYear
+        yearValues: ProfileYear
       }
     ]
   },

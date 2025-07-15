@@ -9,7 +9,8 @@ export default async function isUserExist(email:string | null) {
     const isExist=user.find((userName:MockDataProps)=>userName.email===email)
 
     if(isExist)
-        return true
+        return isExist.id
     else 
         return false
 }
+

@@ -7,7 +7,7 @@ import { Button as MuiCoreButton } from "@mui/material";
     console.log("mui button action running")
   return (
     <MuiCoreButton type={type} variant={variant} disabled={disabled} onClick={onClick} color={color} size={size}
-        fullWidth={fullWidth} className={className} sx={sx} ref={ref}
+        fullWidth={fullWidth} className={className} sx={sx} ref={ref} 
     >{text}{children}</MuiCoreButton>
   )
 }

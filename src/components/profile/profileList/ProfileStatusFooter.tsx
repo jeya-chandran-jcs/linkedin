@@ -7,16 +7,18 @@ import EnhanceProfileCard from "../../../utility/EnhanceProfileCard";
 import Resources from "../../../utility/Resources";
 import AddProfile from "../AddProfile/AddProfile";
 import Pen from "../../../utility/icons/Pen";
+import JobPreferenceAdd from "../AddProfile/ComponentsAPI/JobPreferenceAdd";
 
 type ShowProps={
     openTo:boolean,
     enhanceProfile:boolean,
     resources:boolean,
-    addProfile:boolean
+    addProfile:boolean,
+    jobPreference:boolean
 }
 
 export default function ProfileStatusFooter() {
-    const [show,setShow]=useState<ShowProps>({openTo:false,enhanceProfile:false,resources:false,addProfile:false})
+    const [show,setShow]=useState<ShowProps>({openTo:false,enhanceProfile:false,resources:false,addProfile:false,jobPreference:false})
     // const [enhanceProfile,setEnhanceProfile]=useState<boolean>(false)
     
     const buttonRef={
@@ -33,6 +35,7 @@ export default function ProfileStatusFooter() {
             enhanceProfile:false,
             resources:false,
             addProfile:false,
+            jobPreference:false,
             [key]: !prev[key]
         }))
     }
@@ -46,7 +49,7 @@ export default function ProfileStatusFooter() {
                 return
             }
         }
-        setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false})
+        setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false,jobPreference:false,})
     }
 
     // const handleClose=()=>{
@@ -95,7 +98,7 @@ export default function ProfileStatusFooter() {
                     {OpenTo.map((items:PaperUtilityOpenToProps,index:number)=>(
                         <Paper key={index} title={items.title} desc={items.desc}  onClick={()=>{
                             alert(`item clicked , ${items.title}`)
-                            setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false})
+                            setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false, jobPreference:false,})
                             
                         }}/>
                     ))}
@@ -120,11 +123,11 @@ export default function ProfileStatusFooter() {
                 }}
             />
               {show.addProfile && (
-                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })} 
+                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false,jobPreference:false, })} 
                        sx={{position:"fixed",top:0,left:0,backgroundColor:"rgba(0,0,0,0.4)",zIndex:"9999",width:"100vw",height:"100vh",display:"flex",justifyContent:"center",alignItems:"flex-start",paddingTop:"3rem"}}
                 >
                     <Box sx={{backgroundColor:"white",width:"30%",borderRadius:"8px",display:"flex"}}  onClick={(e) => e.stopPropagation()}>
-                        <AddProfile onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })}/>
+                        <AddProfile onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false,jobPreference:false, })}/>
                     </Box>
                 </Box>
             )}
@@ -146,11 +149,11 @@ export default function ProfileStatusFooter() {
                 }}  
             />
                  {show.enhanceProfile && (
-                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })} 
+                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false,jobPreference:false, })} 
                        sx={{position:"fixed",top:0,left:0,backgroundColor:"rgba(0,0,0,0.4)",zIndex:"9999",width:"100vw",height:"100vh",display:"flex",justifyContent:"center",alignItems:"flex-start",paddingTop:"3rem"}}
                 >
                     <Box sx={{backgroundColor:"white",width:"30%",borderRadius:"8px",display:"flex"}}  onClick={(e) => e.stopPropagation()}>
-                        <EnhanceProfileCard onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false })}/>
+                        <EnhanceProfileCard onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false,jobPreference:false, })}/>
                     </Box>
                 </Box>
             )}
@@ -174,15 +177,26 @@ export default function ProfileStatusFooter() {
             />
             {show.resources && (
                 <Box sx={{position:"absolute",top:"100%",paddingTop:"0.5rem",left:"24vw",width:"100%",zIndex:"1"}}>
-                    <Resources onClick={()=>setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false})}/>
+                    <Resources onClick={()=>setShow({openTo:false,enhanceProfile:false,resources:false,addProfile:false,jobPreference:false,})}/>
                 </Box>
             )}
         </Box>
         <Box sx={{backgroundColor:"#D6E7F3",width:"80%",borderRadius:"8px",padding:"0.7rem 0.9rem",display:"flex",marginY:"1rem",flexDirection:"column",gap:"0.2rem"}}> 
-            <Box sx={{display:"flex",justifyContent:"space-between"}}>
+            <Box sx={{display:"flex",justifyContent:"space-between"}} >
                 <Typography variant="body1" component="p">Open to work</Typography>
-                   <Pen symbol="pencil"/>
+                   <Box onClick={()=>handleShow("jobPreference")}>
+                        <Pen symbol="pencil" />
+                   </Box>
             </Box>
+             {show.jobPreference && (
+                <Box   onClick={() => setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false,jobPreference:false, })} 
+                       sx={{position:"fixed",top:0,left:0,backgroundColor:"rgba(0,0,0,0.4)",zIndex:"9999",width:"100vw",height:"100vh",display:"flex",justifyContent:"center",alignItems:"flex-start",paddingTop:"3rem"}}
+                >
+                    <Box sx={{backgroundColor:"white",width:"33%",borderRadius:"25px",display:"flex"}}  onClick={(e) => e.stopPropagation()}>
+                        <JobPreferenceAdd onClick={()=>setShow({ openTo: false, enhanceProfile: false, resources: false,addProfile:false,jobPreference:false, })}/>
+                    </Box>
+                </Box>
+            )}
             <Typography variant="body2" sx={{textWrap:"wrap"}}>Full-stack Developer, Frontend Developer, Back End Developer and Software Developer roles,</Typography>
             <Typography variant="body2" component="a" color="primary" sx={{fontWeight:"bold"}}>Show details</Typography>
         </Box>

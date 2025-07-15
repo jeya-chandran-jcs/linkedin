@@ -1,6 +1,6 @@
 import type { NavigationProps } from "../../../../types/action";
 import { languageData } from "../../../../utility/componentsApiEnhanceProfile/languageData";
-import ArrayController from "./ArrayController";
+import ArrayController from "./controller/ArrayController";
 
 export default function LanguagesAdd({ goToNext, goToPrev, hasNext, hasPrev }: NavigationProps) {
   return (

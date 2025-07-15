@@ -2,35 +2,30 @@ import { Box, Typography } from '@mui/material'
 import TextFieldMui from '../../components/ActionComp/TextFieldMui';
 import { useState } from 'react';
 import MuiButton from '../../components/ActionComp/MuiButton';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import getData from '../api/getData';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '../../global';
 import postData from '../api/postData';
-import getCurrentUserId from '../getCurrentUserId';
 import type { SingleFieldProps } from '../componentsApiEnhanceProfile/profilePicData';
 
 
 type ModalAboutProps = {
+  id?:string,
   handleClose: () => void;
   singleFieldStructure: SingleFieldProps,
   multiLine?:boolean,
   minRow?:number
 };
-export default function ModalAbout({ handleClose, singleFieldStructure,multiLine,minRow }: ModalAboutProps) {
+export default function ModalAbout({ handleClose, singleFieldStructure,multiLine,minRow,id }: ModalAboutProps) {
   const [about, setAbout] = useState<string>("")
   const queryClient = useQueryClient()
-  const { data } = useQuery({
-    queryKey: ["about"],
-    queryFn: () => getData({ API, message: "GET" })
-  })
   const key=singleFieldStructure.header.dataKey
 
   const mutation = useMutation({
-    mutationFn: (addAbout: string) => postData({ API: `${API}/${user?.id}`, method: "PUT", data: { [key]: addAbout } }),
+    mutationFn: (addAbout: string) => postData({ API: `${API}/${id}`, method: "PUT", data: { [key]: addAbout } }),
     onSuccess: (data) => {
       console.log("data added successfully", data)
       alert("data successfully added")
-      queryClient.invalidateQueries({ queryKey: ["array data"] });
+      queryClient.invalidateQueries({ queryKey: ['single users'] });
     },
     onError: (err) => {
       console.log("something went wrong", err)
@@ -38,16 +33,11 @@ export default function ModalAbout({ handleClose, singleFieldStructure,multiLine
     }
   })
 
-  if (!data) return
-  const user = getCurrentUserId(data)
-
   const handleSubmit = () => {
     mutation.mutate(about)
-    queryClient.invalidateQueries({ queryKey: ["about"] })
     handleClose()
   }
-
-
+  console.log("active",)
   return (
     <Box sx={{
       borderRadius: "8px",
@@ -74,7 +64,7 @@ export default function ModalAbout({ handleClose, singleFieldStructure,multiLine
           <>
             <Typography sx={{ color: "gray", fontWeight: "300", fontSize: "0.9rem" }}>{item.header}</Typography>
 
-            <TextFieldMui fullWidth={true} name={item.key} value={data?.about?.trim() ? data.about : about} handleChange={(e) => setAbout(e.target.value)} variant={"outlined"} type={"text"}
+            <TextFieldMui fullWidth={true} name={item.key} value={about} handleChange={(e) => setAbout(e.target.value)} variant={"outlined"} type={"text"}
               placeHolder={item.placeHolder} multiLine={multiLine} minRow={minRow}
               sx={{
                 '& .MuiOutlinedInput-root': {

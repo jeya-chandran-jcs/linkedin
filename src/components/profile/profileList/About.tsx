@@ -2,10 +2,12 @@ import { Box, Stack, Typography, Modal } from "@mui/material";
 import { useState } from "react";
 import ModalAbout from "../../../utility/subProfilecomp/ModalAbout";
 import { AboutData } from "../../../utility/componentsApiEnhanceProfile/AboutData";
+import { useUserProfile } from "../../../hooks/UserProfileContext";
 
 
 export default function About() {
     const [show, setShow] = useState<boolean>(false)
+    const userAbout=useUserProfile()
     return (
         <Box sx={{
             borderRadius: "8px",
@@ -37,7 +39,7 @@ export default function About() {
                             outline: "none",
                         }}
                     >
-                        <ModalAbout handleClose={() => setShow(false)} singleFieldStructure={AboutData} multiLine={true} minRow={5} />
+                        <ModalAbout  id={userAbout.id} handleClose={() => setShow(false)} singleFieldStructure={AboutData} multiLine={true} minRow={5} />
                     </Box>
                 </Modal>
 
@@ -46,9 +48,7 @@ export default function About() {
 
             <Box sx={{ display: "flex", alignItems: "start", gap: "1rem", }}>
                 <Stack spacing={0}>
-                    <Typography variant="body2" component="p" >🎯 Impacting users one line of code at a time! Hello, I’m Jeya Chandran S, a Full Stack Developer from Madurai, Tamil Nadu, specializing in the MERN stack.
-
-                        With a BCA and MSc in Computer Science, along with a Full Stack MERN Developer certification from IIT Madras</Typography>
+                    <Typography variant="body2" component="p" >{userAbout?.about}</Typography>
 
                 </Stack>
             </Box>

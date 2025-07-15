@@ -7,7 +7,6 @@ import { API } from "../global";
 
 
 export default async function googleLogin() {
-    
     const providers=new GoogleAuthProvider()
 
     providers.setCustomParameters({
@@ -42,8 +41,16 @@ export default async function googleLogin() {
             }
             const postDataINMock=await postData({API,method:"POST",data:registerApi})
             console.log("user register in mock api login with google pop up",postDataINMock)
+          
+            const newUser=await isUserExist(user.email)
+            if(newUser ) return newUser.id
+            else return user
         }
-        return user
+        // else if(isEmailExist)
+        // {
+
+        // }
+        return isEmailExist
     }
    catch (err: unknown) {
     if (err instanceof Error) {

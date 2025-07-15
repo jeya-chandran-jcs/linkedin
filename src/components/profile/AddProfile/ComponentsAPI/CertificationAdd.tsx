@@ -1,5 +1,5 @@
 
-import FormController from "./FromController";
+import FormController from "./controller/FromController";
 import { license_certification } from "../../../../utility/componentsApiEnhanceProfile/licence_certification";
 import type { NavigationProps } from "../../../../types/action";
 

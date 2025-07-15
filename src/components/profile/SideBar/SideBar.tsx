@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import Languages from "../profileList/Languages";
+// import Languages from "../profileList/Languages";
 import AmazonAdd from "./AmazonAdd";
 import Viewers from "./Viewers";
 import { peopleSugg, viewers } from "../../../utility/viewers";
@@ -19,7 +19,7 @@ export default function SideBar() {
         gap:"0.7rem"
       }}
     >
-      <Languages />
+      {/* <Languages /> */}
 
       <AmazonAdd />
 

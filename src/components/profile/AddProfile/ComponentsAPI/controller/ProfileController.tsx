@@ -9,7 +9,7 @@ import getData from "../../../../../utility/api/getData";
 import { API } from "../../../../../global";
 import getCurrentUserId from "../../../../../utility/getCurrentUserId";
 import postData from "../../../../../utility/api/postData";
-import MuiSelect from "../../../..//ActionComp/MuiSelect";
+import MuiSelect from "../../../../ActionComp/MuiSelect";
 import { Link } from "@tanstack/react-router";
 
 
@@ -137,7 +137,7 @@ export default function ProfileController({ formStructure, title, keyMessage, go
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #D3D3D3", padding: "1rem" }}>
                 <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>{title}</Typography>
                 <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="/user-profile"></a>
+                    <a className="fa-solid fa-x font-bold text-lg text-gray-600" href="../"></a>
 
                 </Box>
             </Box>
