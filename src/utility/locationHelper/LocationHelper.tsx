@@ -9,7 +9,8 @@ export type LocationHelperProps = {
     value?: string,
     onChange?: (value: string) => void,
     placeHolder?: string,
-    type?:string
+    type?:string,
+    onKeyDown?:(e:React.KeyboardEvent<HTMLInputElement>)=>void
 }
 
 type GeoapifyFeature = {
@@ -19,7 +20,7 @@ type GeoapifyFeature = {
 };
 
 
-export default function LocationHelper({ label, name, value, onChange, placeHolder,type }: LocationHelperProps) {
+export default function LocationHelper({ label, name, value, onChange, placeHolder,type,onKeyDown }: LocationHelperProps) {
     const [suggestions, setSuggestions] = useState<string[]>([])
     const [cityQuery, setCityQuery] = useState<string>("")
     const [show, setShow] = useState<boolean>(false)
@@ -73,6 +74,7 @@ export default function LocationHelper({ label, name, value, onChange, placeHold
                         }
                     }
                 }}
+                onKeyDown={onKeyDown}
             />
 
             {suggestions.length > 0 && (

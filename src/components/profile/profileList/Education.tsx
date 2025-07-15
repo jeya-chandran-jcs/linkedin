@@ -10,8 +10,6 @@ export type EducationProp={
 export default function Education() {
     const userEducation=useUserProfile()
     const educationList=userEducation.education.slice(0,2)
-
-    console.log("from education",userEducation.education)
    
     const message="Education"
    

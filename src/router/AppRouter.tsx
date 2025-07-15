@@ -71,6 +71,12 @@ const profileIntro=createRoute({
     component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/ProfileIntro"))
 })
 
+// const jobPrefenceRoute=createRoute({
+//     path:"edit/jobPreference",
+//     getParentRoute:()=>profileRoute,
+//     component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/"))
+// })
+
 const routeTree=rootRoute.addChildren([
    notFoundRoute,
     loginRoute,

@@ -12,9 +12,6 @@ type CommonFormStructureProps<T> = {
 }
 
 export default function CommonForm<T extends Record<string,unknown>>({ commonStructure, message, data }: CommonFormStructureProps<T>) {
-
-    console.log("inside common form", commonStructure)
-    console.log(message)
     return (
         <Box sx={{
             borderRadius: "8px",

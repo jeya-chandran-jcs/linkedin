@@ -1,6 +1,6 @@
 import { Box, Typography, type SelectChangeEvent } from "@mui/material";
 import TextFieldMui from "../../../../ActionComp/TextFieldMui";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MuiButton from "../../../../ActionComp/MuiButton";
 import type { FromStructureGrouped } from "../../../../../utility/componentsApiEnhanceProfile/AddProfileSupport";
 import type { MockDataProps } from "../../../../../types/mockDataApi";
@@ -11,6 +11,7 @@ import getCurrentUserId from "../../../../../utility/getCurrentUserId";
 import postData from "../../../../../utility/api/postData";
 import MuiSelect from "../../../../ActionComp/MuiSelect";
 import { Link } from "@tanstack/react-router";
+import LocationHelper from "../../../../../utility/locationHelper/LocationHelper";
 
 
 type FormController = {
@@ -26,18 +27,9 @@ type FromControllerProps = {
     hasPrev?: boolean
 }
 
-type GeoapifyFeature = {
-    properties: {
-        formatted: string;
-    };
-};
 
 export default function ProfileController({ formStructure, title, keyMessage, goToNext, goToPrev, hasNext, hasPrev }: FromControllerProps) {
     const [formValues, setfromValues] = useState<FormController>({ pronouns: "He/Him" })
-    const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [cityQuery, setCityQuery] = useState<string>("");
-    const [show, setShow] = useState<boolean>(false)
-
     const { data } = useQuery({
         queryKey: ["Form Controller profile"],
         queryFn: () => getData({ API, message: "GET" })
@@ -55,23 +47,6 @@ export default function ProfileController({ formStructure, title, keyMessage, go
         }
     })
 
-    useEffect(() => {
-        const delayBounce = setTimeout(() => {
-            if (show && cityQuery.length > 2) {
-                fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
-                    cityQuery
-                )}&limit=5&apiKey=5c6e66d0a7c441c2b30c6f7f7bb0932c`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        console.log("data suggestion features", data)
-                        setSuggestions(data.features.map((f: GeoapifyFeature) => f.properties.formatted))
-                    })
-                    .catch((err) => console.log(err))
-            }
-        }, 500)
-        return () => clearTimeout(delayBounce)
-    }, [cityQuery])
-
     if (!data) return
     if (!keyMessage) {
         return
@@ -83,12 +58,6 @@ export default function ProfileController({ formStructure, title, keyMessage, go
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setfromValues((prev) => ({ ...prev, [name]: value }))
-
-        if (name === "city") {
-            setCityQuery(value)
-            setShow(true)
-        }
-
     }
 
     const handleSelectChange = (e: SelectChangeEvent<string>) => {
@@ -281,67 +250,7 @@ export default function ProfileController({ formStructure, title, keyMessage, go
                                 {item.key === "city" ?
                                     (
                                         <>
-                                            <Typography component="label" variant="subtitle2" color="textSecondary">{item.label}</Typography>
-
-                                            <TextFieldMui value={formValues[item.key] || ""} handleChange={handleChange} fullWidth={true} name={item.key} type={item.type} variant={"outlined"} placeHolder={item.placeholder}
-                                                sx={{
-                                                    position: "relative",
-                                                    '& .MuiOutlinedInput-root': {
-
-                                                        borderRadius: "4px",
-                                                        fontSize: '14px',
-                                                        backgroundColor: '#fff',
-                                                        padding: '4px 2px',
-                                                        '& input, & textarea': {
-                                                            padding: "6px 10px",
-                                                            fontFamily: 'inherit',
-                                                            fontSize: "14px",
-                                                            lineHeight: 1.5,
-                                                        },
-                                                        '& fieldset': {
-                                                            border: "1.5px solid #808080"
-                                                        },
-                                                        '&:hover fieldset': {
-                                                            border: '2px solid black',
-                                                        },
-                                                        '&.Mui-focused fieldset': {
-
-                                                            border: '2px solid black',
-                                                        }
-                                                    }
-                                                }}
-                                            />
-
-                                            {suggestions.length > 0 && (
-                                                <Box sx={{
-
-                                                    border: "1px solid #ccc",
-                                                    borderRadius: "4px",
-                                                    maxHeight: "150px",
-                                                    overflowY: "auto",
-                                                    backgroundColor: "#fff",
-                                                    zIndex: 1000,
-
-                                                    width: "100%",
-
-
-                                                }}>
-                                                    {suggestions.map((place, i) => (
-                                                        <Box key={i} sx={{ padding: "8px", borderBottom: "1px solid #eee", cursor: "pointer", "&:hover": { backgroundColor: "#f5f5f5" }, }}
-                                                            onClick={() => {
-                                                                setCityQuery(place)
-                                                                setfromValues((prev) => ({ ...prev, city: place }))
-                                                                setSuggestions([])
-                                                                setShow(false)
-                                                            }}
-
-
-                                                        >
-                                                            {place}
-                                                        </Box>
-                                                    ))}
-                                                </Box>
-                                            )}
+                                            <LocationHelper value={formValues[item.key]} name={item.key} type={item.type} label={item.label} placeHolder={item.placeholder} onChange={(val) => setfromValues((Prev) => ({ ...Prev, [item.key]: val }))} />
                                         </>
                                     ) :
                                     <>

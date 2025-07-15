@@ -12,7 +12,7 @@ type Body={
     values?:string[],
     type:string
 }
-type FooterValues={
+export type FooterValues={
     title:string,
     subTitle:string,
     description:string
@@ -60,16 +60,14 @@ export const jobPreferenceData:JobPreferenceProps={
         {
             key:"noticePeriod",
             label:"Notice period (only visible to recruiters)",
-            placeHolder:"select",
-            values:["15 days or less","30 days","60 days","90 days","more than 90 days"],
-            type:"select"
+            placeHolder:"Ex: 30days",
+            type:"text"
         },
         {
             key:"expectAnnSalary",
             label:"Expected annual salary (only visible to recruiters)",
-            placeHolder:"select",
-            values:["₹ 1+ lakhs","₹ 3+ lakhs","₹ 6+ lakhs","₹ 10+ lakhs","₹ 25+ lakhs"],
-            type:"select"
+            placeHolder:"₹ 6+ lakhs",
+            type:"text"
         },
         {
             key:"startDate",
@@ -83,7 +81,7 @@ export const jobPreferenceData:JobPreferenceProps={
             key:"employmentTypes",
             label:"Employment Types",
             values:["Full-time","Part-time","Contract","Internship","Temporary"],
-            type:"radio"
+            type:"checkBox"
         },
         {
             key:"visibility",
