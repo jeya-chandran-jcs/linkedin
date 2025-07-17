@@ -5,17 +5,15 @@ import CommonForm from "./commonForm.tsx/CommonForm";
 export default function Languages() {
       const userEducation=useUserProfile()
         const educationList=userEducation.language.slice(0,2)
-    
-        console.log("from education",userEducation.education)
        
         const message="Language"
-       
+        const apiKey="languages"
         const fieldSet={
             title:"languageName",
             subTitle:"proficiencyLevel",
         }
         return (
-           <CommonForm commonStructure={fieldSet} message={message} data={educationList}/>
+           <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
         )
 //   return (
 //     <Box sx={{

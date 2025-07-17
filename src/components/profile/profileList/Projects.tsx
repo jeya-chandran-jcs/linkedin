@@ -10,7 +10,7 @@ export default function Projects() {
         
        
         const message="Projects"
-       
+        const apiKey="projects"
         const fieldSet={
             title:"projectName",
             subTitle:"associatedWith",
@@ -18,7 +18,7 @@ export default function Projects() {
             description:"description"
         }
         return (
-           <CommonForm commonStructure={fieldSet} message={message} data={educationList}/>
+           <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
         )
   
 }

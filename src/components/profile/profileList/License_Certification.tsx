@@ -11,7 +11,7 @@ export default function License_Certification() {
        
       
        const message="License & Certifications"
-      
+       const apiKey="license"
        const fieldSet={
            title:"name",
            subTitle:"issuingOrganization",
@@ -19,6 +19,6 @@ export default function License_Certification() {
            description:"credentialURL"
        }
        return (
-          <CommonForm commonStructure={fieldSet} message={message} data={educationList}/>
+          <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
        )
 }

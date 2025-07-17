@@ -8,21 +8,13 @@ import { useParams } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postData from "../../../../utility/api/postData";
 import { API } from "../../../../global";
+import type { JobPreferenceFormProps } from "../../../../types/mockDataApi";
 
 type JobPreferenceAddProps = {
     onClick: () => void
 }
 
-type JobPreferenceFormProps = {
-    jobTitle: string[];
-    locationType: string[];
-    locationsSite: string[];
-    noticePeriod: string;
-    expectAnnSalary: string;
-    startDate: string;
-    employmentTypes: string[];
-    visibility: string;
-}
+
 type ArrayFieldKeys = 'jobTitle' | 'locationType' | 'locationsSite';
 
 export default function JobPreferenceAdd({ onClick }: JobPreferenceAddProps) {

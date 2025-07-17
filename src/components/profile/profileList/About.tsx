@@ -4,10 +4,13 @@ import ModalAbout from "../../../utility/subProfilecomp/ModalAbout";
 import { AboutData } from "../../../utility/componentsApiEnhanceProfile/AboutData";
 import { useUserProfile } from "../../../hooks/UserProfileContext";
 
+type AuthProps = {
+    auth: boolean | null
+}
 
-export default function About() {
+export default function About({ auth }: AuthProps) {
     const [show, setShow] = useState<boolean>(false)
-    const userAbout=useUserProfile()
+    const userAbout = useUserProfile()
     return (
         <Box sx={{
             borderRadius: "8px",
@@ -23,32 +26,40 @@ export default function About() {
         }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography variant="h6" component="h6" sx={{ fontWeight: "600", fontSize: "1.1rem", color: "#212121" }}>About</Typography>
-                <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center", position: "relative" }}>
-                    <i onClick={() => setShow(prev => !prev)} className="fa-solid fa-pen font-bold text-lg text-gray-600"></i>
-                </Box>
-                <Modal open={show} onClose={() => setShow(false)}>
-                    <Box
-                        sx={{
-                            marginTop: "5rem",
-                            backgroundColor: "#fff",
-                            borderRadius: "8px",
-                            width: "100%",
-                            maxWidth: "40%",
-                            marginX: "auto",
-                            boxShadow: 24,
-                            outline: "none",
-                        }}
-                    >
-                        <ModalAbout  id={userAbout.id} handleClose={() => setShow(false)} singleFieldStructure={AboutData} multiLine={true} minRow={5} />
-                    </Box>
-                </Modal>
+                {auth &&
+                    <>
+                        <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center", position: "relative" }}>
+                            <i onClick={() => setShow(prev => !prev)} className="fa-solid fa-pen font-bold text-lg text-gray-600"></i>
+                        </Box>
+                        <Modal open={show} onClose={() => setShow(false)}>
+                            <Box
+                                sx={{
+                                    marginTop: "5rem",
+                                    backgroundColor: "#fff",
+                                    borderRadius: "8px",
+                                    width: "100%",
+                                    maxWidth: "40%",
+                                    marginX: "auto",
+                                    boxShadow: 24,
+                                    outline: "none",
+                                }}
+                            >
+                                <ModalAbout id={userAbout.id} handleClose={() => setShow(false)} singleFieldStructure={AboutData} multiLine={true} minRow={5} />
+                            </Box>
+                        </Modal>
+                    </>
+                }
 
             </Box>
 
 
             <Box sx={{ display: "flex", alignItems: "start", gap: "1rem", }}>
                 <Stack spacing={0}>
-                    <Typography variant="body2" component="p" >{userAbout?.about}</Typography>
+                    <Typography variant="body2" component="p" >
+                        {userAbout?.about?.trim() ? userAbout.about :
+                            "Tell us about yourself. This section helps recruiters understand you better."
+                        }
+                    </Typography>
 
                 </Stack>
             </Box>

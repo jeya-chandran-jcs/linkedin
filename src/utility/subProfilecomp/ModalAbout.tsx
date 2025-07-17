@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API } from '../../global';
 import postData from '../api/postData';
 import type { SingleFieldProps } from '../componentsApiEnhanceProfile/profilePicData';
+import { auth } from '../../config/google';
 
 
 type ModalAboutProps = {
@@ -19,7 +20,8 @@ export default function ModalAbout({ handleClose, singleFieldStructure,multiLine
   const [about, setAbout] = useState<string>("")
   const queryClient = useQueryClient()
   const key=singleFieldStructure.header.dataKey
-
+const puctuere=auth?.currentUser?.photoURL
+console.log(puctuere)
   const mutation = useMutation({
     mutationFn: (addAbout: string) => postData({ API: `${API}/${id}`, method: "PUT", data: { [key]: addAbout } }),
     onSuccess: (data) => {

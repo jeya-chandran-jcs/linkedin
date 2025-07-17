@@ -9,7 +9,7 @@ const resourceItems=[
 ]
 
 type ResourcesProps={
-    onClick:()=>void
+    onClick?:()=>void
 }
 
 export default function Resources({onClick}:ResourcesProps) {

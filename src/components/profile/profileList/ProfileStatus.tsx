@@ -6,13 +6,15 @@ import { Link, useParams } from "@tanstack/react-router";
 import Pen from "../../../utility/icons/Pen";
 import type { MockDataProps } from "../../../types/mockDataApi";
 
+
 type AuthProfileProps = {
   authUser: MockDataProps;
+  auth: boolean | null
 };
 
-export default function ProfileStatus({ authUser }: AuthProfileProps) {
-  const {id}=useParams({from: "/user-profile/$id"})
-  // console.log(authUser);
+export default function ProfileStatus({ authUser, auth }: AuthProfileProps) {
+  const { id } = useParams({ from: "/user-profile/$id" })
+
   return (
     <Container
       sx={{
@@ -49,51 +51,65 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             <Typography variant="h6" component="h6">
               {authUser?.name}
             </Typography>
-            <Typography variant="body2" component="p" color="text.secondary">
-              {authUser?.profileIntro?.pronouns}
-            </Typography>
-            <MuiButton
-              type={"button"}
-              text={""}
-              variant={"outlined"}
-              fullWidth={false}
-              color={"info"}
-              size={"small"}
-              children={
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  <i className="fa-regular fa-circle-check"></i>
-                  <p>Add a verification badge</p>
-                </Box>
-              }
-              sx={{
-                border: "2px dashed #1976d2",
-                color: "#1976d2",
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "500",
-                "&:hover": {
-                  backgroundColor: "#e3f2fd",
-                  color: "darkblue",
-                  border: "2px dashed #1565c0",
-                },
-              }}
-            />
+
+            {authUser?.profileIntro?.pronouns &&
+              <Typography variant="body2" component="p" color="text.secondary">
+                {authUser?.profileIntro?.pronouns}
+              </Typography>
+            }
+
+            {auth &&
+              <MuiButton
+                type={"button"}
+                text={""}
+                variant={"outlined"}
+                fullWidth={false}
+                color={"info"}
+                size={"small"}
+                children={
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    <i className="fa-regular fa-circle-check"></i>
+                    <p>Add a verification badge</p>
+                  </Box>
+                }
+                sx={{
+                  border: "2px dashed #1976d2",
+                  color: "#1976d2",
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "500",
+                  "&:hover": {
+                    backgroundColor: "#e3f2fd",
+                    color: "darkblue",
+                    border: "2px dashed #1565c0",
+                  },
+                }}
+              />
+            }
           </Box>
 
           {/* middle */}
-          <Typography variant="body1" component="p" sx={{ textWrap: "wrap" }}>
-            {authUser?.profileIntro?.headline}
-          </Typography>
+          {authUser?.profileIntro?.headline &&
+            <Typography variant="body1" component="p" sx={{ textWrap: "wrap" }}>
+              {authUser?.profileIntro?.headline}
+            </Typography>
+          }
+
           <Box>
             <Typography color="text.secondary" variant="body2" component="p">
-              {authUser?.profileIntro?.city} - {authUser?.profileIntro?.country}
+              {(authUser?.profileIntro?.city && authUser?.profileIntro?.country) &&
+                <>
+                  {authUser?.profileIntro?.city} - {authUser?.profileIntro?.country}
+                </>
+              }
+
               <Link
                 to={`/user-profile/${id}/edit/contact`}
                 style={{
@@ -114,21 +130,24 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
             </Typography>
           </Box>
 
-          <Link to={authUser?.profileIntro?.link}>
-            <Typography
-              color="primary"
-              variant="body2"
-              sx={{
-                fontWeight: "900",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-              }}
-            >
-              {authUser?.profileIntro?.linkText}
-              <Pen symbol="arrow-up-right-from-square" />
-            </Typography>
-          </Link>
+          {authUser?.profileIntro?.link &&
+            <Link to={authUser?.profileIntro?.link}>
+              <Typography
+                color="primary"
+                variant="body2"
+                sx={{
+                  fontWeight: "900",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                {authUser?.profileIntro?.linkText}
+                <Pen symbol="arrow-up-right-from-square" />
+              </Typography>
+            </Link>
+          }
+
           <Typography
             color="primary"
             variant="body2"
@@ -140,24 +159,27 @@ export default function ProfileStatus({ authUser }: AuthProfileProps) {
         </Box>
 
         {/* Right box */}
-        <Box
-          sx={{
-            width: "35%",
-            padding: "10px",
-            display: "flex",
-            // justifyContent:"flex-start",
-            // alignItems:"flex-start",
-            gap: "1rem"
-          }}
-        >
-          <CertificateLogo height={50} width={85} />
-          <Typography component="a" variant="body2" sx={{ fontWeight: "500" }} >{authUser?.profileIntro?.higherEducation}</Typography>
-        </Box>
+        {authUser?.profileIntro?.higherEducation &&
+          <Box
+            sx={{
+              width: "35%",
+              padding: "10px",
+              display: "flex",
+              // justifyContent:"flex-start",
+              // alignItems:"flex-start",
+              gap: "1rem"
+            }}
+          >
+            <CertificateLogo height={50} width={85} />
+            <Typography component="a" variant="body2" sx={{ fontWeight: "500" }} >{authUser?.profileIntro?.higherEducation}</Typography>
+          </Box>
+
+        }
       </Box>
 
       {/* Footer  */}
       <Box sx={{ backgroundColor: "white", }}>
-        <ProfileStatusFooter />
+        <ProfileStatusFooter auth={auth}/>
       </Box>
     </Container>
   );

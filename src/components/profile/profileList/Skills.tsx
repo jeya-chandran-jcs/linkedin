@@ -9,13 +9,13 @@ export default function Skills() {
          
         
          const message="Skills"
-        
+        const apiKey="skills"
          const fieldSet={
              title:"skills",
              subTitle:"skillLevel",
          }
          return (
-            <CommonForm commonStructure={fieldSet} message={message} data={educationList}/>
+            <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
          )
    
 }

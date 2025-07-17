@@ -34,20 +34,20 @@ export type ShowProps={
 }
 
 
-export type MuiButtonProps={
-    type:'button' | 'submit' | 'reset',
-    variant:"text" | "outlined" | "contained",
-    disabled?:boolean,
-    onClick?:(e:React.MouseEvent<HTMLButtonElement>)=>void,
-    color?:"primary" | "secondary" | "info" | "warning" | "success" | "error",
-    size?:"small" | "medium" | "large",
-    fullWidth?:boolean,
-    className?:string,
-    text?:string,
-    children?:React.ReactNode,
-    sx?:SxProps<Theme>,
-    ref?: React.Ref<HTMLButtonElement>
-}
+export type MuiButtonProps = {
+  type: 'button' | 'submit' | 'reset';
+  variant: "text" | "outlined" | "contained";
+  disabled?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  color?: "primary" | "secondary" | "info" | "warning" | "success" | "error";
+  size?: "small" | "medium" | "large";
+  fullWidth?: boolean;
+  className?: string;
+  text?: string;
+  children?: React.ReactNode;
+  sx?: SxProps<Theme>;
+  ref?: React.Ref<HTMLButtonElement>;
+};
 
 export type NavigationProps = {
   goToNext?: () => void;

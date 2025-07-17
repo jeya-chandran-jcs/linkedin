@@ -6,10 +6,9 @@ export default function Experience() {
    const userEducation=useUserProfile()
       const educationList=userEducation.experience.slice(0,2)
   
-      console.log("from education",userEducation.experience)
      
       const message="Experience"
-     
+      const apiKey="experience"
       const fieldSet={
           title:"title",
           subTitle:"company",
@@ -17,6 +16,6 @@ export default function Experience() {
           description:"description"
       }
       return (
-         <CommonForm commonStructure={fieldSet} message={message} data={educationList}/>
+         <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
       )
 }

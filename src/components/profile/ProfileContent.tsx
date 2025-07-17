@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material'
-
 import ProfileUser from './profileList/ProfileUser';
 import ProfileAdd from './profileList/ProfileAdd';
 import Languages from './profileList/Languages';
@@ -13,7 +12,9 @@ import { useQuery } from '@tanstack/react-query';
 import getData from '../../utility/api/getData';
 import { API } from '../../global';
 import { useParams } from '@tanstack/react-router';
-import { UserProfileContext } from '../../hooks/UserProfileContext';
+import { UserProfileContext} from '../../hooks/UserProfileContext';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store/store';
 
 
 export default function ProfileContent() {
@@ -23,18 +24,18 @@ export default function ProfileContent() {
     queryKey: ['single users'],
     queryFn: () => getData({ API: `${API}/${id}`, message: 'GET' }),
   });
-
+  
+  const auth=useSelector((state:RootState)=>state.store.auth)
 
   if (isLoading) return <Typography>Loading...</Typography>;
   if (error) return <Typography>Error loading profile data</Typography>;
   if (!data) return <Typography>User not found</Typography>;
-
-
+  
   return (
     <UserProfileContext.Provider value={data}>
       <Box
         sx={{
-          maxWidth: "800px",
+          maxWidth:auth ? "800px" : "900px",
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -43,10 +44,10 @@ export default function ProfileContent() {
           // marginY:"1rem"
         }}
       >
-        <ProfileUser />
-        <About />
+        <ProfileUser auth={auth}/>
+        <About auth={auth}/>
         <ProfileAdd />
-        <Education  />
+        <Education  auth={auth}/>
         <Experience />
         <Skills />
         <Projects />

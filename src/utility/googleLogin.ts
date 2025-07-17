@@ -22,7 +22,7 @@ export default async function googleLogin() {
         const token =await user.getIdToken()
 
         console.log("user",user)
-       console.log("token>>>>>>>>",token)
+    //    console.log("token>>>>>>>>",token)
         localStorage.setItem("user",JSON.stringify({
             uid:user.uid,
             name:user.displayName,
@@ -37,7 +37,7 @@ export default async function googleLogin() {
                 uid:user.uid,
                 name:user.displayName,
                 email:user.email,
-                photoUrl:user.photoURL
+                photoUrl:user.photoURL,
             }
             const postDataINMock=await postData({API,method:"POST",data:registerApi})
             console.log("user register in mock api login with google pop up",postDataINMock)

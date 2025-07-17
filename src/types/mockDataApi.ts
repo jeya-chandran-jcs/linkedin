@@ -62,6 +62,17 @@ export type LanguageProps= {
         proficiencyLevel: string
       }
 
+export  type JobPreferenceFormProps = {
+          jobTitle: string[];
+          locationType: string[];
+          locationsSite: string[];
+          noticePeriod: string;
+          expectAnnSalary: string;
+          startDate: string;
+          employmentTypes: string[];
+          visibility: string;
+      }
+
 export type MockDataProps={
     id:string,
     name:string,
@@ -90,4 +101,5 @@ export type MockDataProps={
     organization:OrganizationEntry,
     photoUrl?:string,
     backGroundPic?:string,
+    jobPreference:JobPreferenceFormProps
 }
