@@ -18,7 +18,7 @@ export default function ProfileLeft() {
         <Box
             sx={{
                 borderRadius: "8px",
-                //   flexGrow: 1,
+                
                 width: "100%",
                 border: "1px solid gray",
                 position: 'relative',

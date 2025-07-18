@@ -6,7 +6,7 @@ import MuiButton from "../../../ActionComp/MuiButton";
 export default function RightBarStories() {
     const [show,setShow]=useState<boolean>(false)
     
-    const trimNews=show ? linkedInNews.header.slice(0,5) : linkedInNews.header
+    const trimNews=show ? linkedInNews.header : linkedInNews.header.slice(0,5) 
     return (
         <Box
             sx={{

@@ -3,6 +3,7 @@ import Navbar from "../components/base/Navbar";
 import Footer from "../components/base/Footer";
 import ProfileEditModala from "../components/profile/AddProfile/ComponentsAPI/ProfileEditModala";
 import Profile from "../pages/Profile";
+import HomePage from "../pages/HomePage";
 
 const rootRoute=createRootRoute({
     component:()=>(
@@ -26,12 +27,6 @@ const loginRoute=createRoute({
     path:"/login",
     getParentRoute:()=>rootRoute,
     component:lazyRouteComponent(()=>import("../pages/LoginPage"))
-})
-
-const homeRoute=createRoute({
-    path:"/home",
-    getParentRoute:()=>rootRoute,
-    component:lazyRouteComponent(()=>import("../pages/HomePage"))
 })
 
 const notFoundRoute=createRoute({
@@ -77,23 +72,35 @@ const profileIntro=createRoute({
     component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/ProfileIntro"))
 })
 
-// const jobPrefenceRoute=createRoute({
-//     path:"edit/jobPreference",
-//     getParentRoute:()=>profileRoute,
-//     component:lazyRouteComponent(()=>import("../components/profile/AddProfile/ComponentsAPI/"))
+const homeRoute=createRoute({
+    path:"/home",
+    getParentRoute:()=>rootRoute,
+    component:()=>(
+        <>
+            <HomePage />
+            <Outlet />
+        </>
+    )
+})
+
+// const addPostHomeModal=createRoute({
+//     path:"post/",
+//     getParentRoute:()=>homeRoute,
+//     component:lazyRouteComponent(()=>import("../components/home/homecomponents/homeAddPost/AddPostModal/AddPostModal"))
 // })
 
 const routeTree=rootRoute.addChildren([
     indexRouter,
    notFoundRoute,
     loginRoute,
-    homeRoute,
     signUpRoute,
     signInEmail,
     profileRoute.addChildren([
         profileEditModalRoute,
         profileIntro
     ]),
+    homeRoute,
+
 ])
 
 const router=createRouter({routeTree,notFoundRoute})

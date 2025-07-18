@@ -60,6 +60,7 @@ export default function ProfileStatus({ authUser, auth }: AuthProfileProps) {
 
             {auth &&
               <MuiButton
+              onClick={()=>console.log("void status")}
                 type={"button"}
                 text={""}
                 variant={"outlined"}
