@@ -21,7 +21,7 @@ export default function HomePage() {
       if(isLoading) return <Typography>loading</Typography>
       if(isError) return <Typography>error</Typography>
       if(!data) return <Typography>data is still not loaded</Typography>
-    console.log("from home page",userId,"data",data)
+    console.log("from home page",userId,"data",data[0].photoUrl)
 
   return (
     <UserHomeContext value={data}>

@@ -4,25 +4,85 @@ import type { MockDataProps } from '../../../../../types/mockDataApi';
 import MuiButton from '../../../../ActionComp/MuiButton';
 import { useState } from 'react';
 import AddPostTextModal from './AddPostModal/AddPostTextModal';
-import AddPostImageModal from './AddPostModal/AddPostImageModal';
+import AddPostImageModal from '../../../../ActionComp/AddPostImageModal';
+import { useMutation } from '@tanstack/react-query';
+import { API } from '../../../../../global';
+import postData from '../../../../../utility/api/postData';
+import { cloudImageUploader } from '../../../../../utility/cloudinaryUploadHelper.ts/cloudinaryHelperFunction';
 
 export type AddPostModalProps = {
 
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
+type UserPostType = {
+  post: string;
+  imageUrl: string | null;
+  createdAt: string;
+};
+
+
 export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
     const [post, setPost] = useState("")
-    const [changeModal,setChangeModal]=useState<boolean>(false)
-    const userData = useUserHomeContext()
-    const userCurrentId = sessionStorage.getItem("userId")
-    const userProfileData = userData.find((singleUser: MockDataProps) => singleUser.id === userCurrentId)
+    const [image, setImage] = useState<File | null>(null)
+    const [preview, setPreview] = useState<string | null>(null)
+    const [changeModal, setChangeModal] = useState<boolean>(false)
     
+    const userData = useUserHomeContext()
+
+    const mutation = useMutation({
+            mutationFn: (newField:UserPostType) => postData({ API: `${API}/${userCurrentId }`, method: "PUT", data: {post:newField}}),
+            onSuccess: (data) => {
+                console.log("data added from form values", data)
+                alert("data added")
+            },
+            onError: (err) => {
+                console.log("something went wrong while adding form values", err)
+                alert("failed")
+            }
+        })
+    
+        const userCurrentId = sessionStorage.getItem("userId")
+    const userProfileData = userData.find((singleUser: MockDataProps) => singleUser.id === userCurrentId)
+
     if (!userProfileData) return
 
-    const handleSubmit=()=>{
-        alert(post)
+    const handleSubmit = async() => {
+        try{
+            let imageUrl=null
+            if(image)
+            {
+                imageUrl=await cloudImageUploader(image)
+                console.log("cloudIMage",imageUrl)
+            }
+            else if( preview && !image)
+            {
+                imageUrl=preview
+            }
+            const  userPost={
+                post,
+                imageUrl,
+                createdAt:new Date().toISOString()
+            }
+            mutation.mutate(userPost)
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+        console.log("post",post)
+        console.log("image",image)
+        console.log("preview",preview)
     }
+
+    const handleSubmitPost = () => {
+          if (preview && changeModal) {
+        setChangeModal(false); // Move to text modal
+    } else {
+        handleSubmit(); // Final submit
+    }
+    }
+    console.log("change", changeModal)
     return (
         <Box
             sx={{
@@ -52,13 +112,14 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
 
             {/* body */}
             <Box>
-                <Box sx={{ padding: "0 1rem",height:"40vh",overflowY:"scroll" }}>
-                    {changeModal ?  
-                    <AddPostTextModal post={post} handleChange={(e)=>setPost(e.target.value)}/>
-                    :
-                     <AddPostImageModal />
+                <Box sx={{ padding: "0 1rem", height: "40vh", overflowY: "scroll" }}>
+                    {changeModal ?
+                        <AddPostImageModal image={image} setImage={setImage} preview={preview} setPreview={setPreview} />
+
+                        :
+                        <AddPostTextModal post={post} handleChange={(e) => setPost(e.target.value)} preview={preview} setPreview={setPreview} />
                     }
-                    
+
                 </Box>
 
 
@@ -71,7 +132,7 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
                                 type="button"
                                 variant="outlined"
                                 sx={{ fontSize: "1.5rem", border: "none" }}
-                                onClick={()=>setChangeModal(true)}
+                                onClick={() => setChangeModal(true)}
                             >
                                 <i className="fa-solid fa-image text-gray-600"></i>
                             </MuiButton>
@@ -83,7 +144,7 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
                                 type="button"
                                 variant="outlined"
                                 sx={{ fontSize: "1.5rem", border: "none" }}
-                                onClick={()=>setChangeModal(false)}
+                                onClick={() => setChangeModal(false)}
                             >
                                 <i className="fa-solid fa-file-lines text-gray-600"></i>
                             </MuiButton>
@@ -93,8 +154,8 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
                 </Box>
             </Box>
 
-            <Box sx={{borderTop:"1px solid lightgray",display:"flex",justifyContent:"end",padding:"1rem"}}>
-                        <MuiButton text={"post"} type={"button"} variant={"contained"} size={"medium"} sx={{borderRadius:"25px",fontWeight:"600"}} onClick={()=>handleSubmit()}/> 
+            <Box sx={{ borderTop: "1px solid lightgray", display: "flex", justifyContent: "end", padding: "1rem" }}>
+                <MuiButton text={preview && changeModal ? "next" : "post"} type={"button"} variant={"contained"} size={"medium"} sx={{ borderRadius: "25px", fontWeight: "600" }} onClick={handleSubmitPost} />
             </Box>
 
         </Box>
@@ -102,29 +163,3 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
     )
 }
 
-
-
-
-
-
-
-
-
-
-                    // <TextFieldMui value={post} handleChange={(e) => setPost(e.target.value)} variant={"outlined"} placeHolder='What do you want to talk about?' fullWidth={true} multiLine={true} minRow={14    } type={"textArea"} name={"post"}
-                    //     sx={{
-                    //         fontSize: "1.1rem",
-                    //         '& .MuiOutlinedInput-root': {
-                    //             '& fieldset': {
-                    //                 border: 'none',
-                    //             },
-                    //             '&:hover fieldset': {
-                    //                 border: 'none',
-                    //             },
-                    //             '&.Mui-focused fieldset': {
-                    //                 border: 'none',
-                    //             },
-                    //         },
-                    //     }}
-
-                    // />

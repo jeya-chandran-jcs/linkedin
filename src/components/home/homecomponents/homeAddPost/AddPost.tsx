@@ -11,6 +11,7 @@ export default function AddPost() {
     const userHomeData = useUserHomeContext()
     const userId = sessionStorage.getItem("userId")
     const userProfileData = userHomeData.find((userProfile: MockDataProps) => userProfile.id === userId)
+    
     return (
         <Box sx={{ backgroundColor: "white", padding: "0.5rem", borderRadius: "8px", display: "flex", flexDirection: "column", border: "1px solid #d6d3cf" }}>
 

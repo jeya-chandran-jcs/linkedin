@@ -35,7 +35,7 @@ export type ShowProps={
 
 
 export type MuiButtonProps = {
-  type: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
   variant: "text" | "outlined" | "contained";
   disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
