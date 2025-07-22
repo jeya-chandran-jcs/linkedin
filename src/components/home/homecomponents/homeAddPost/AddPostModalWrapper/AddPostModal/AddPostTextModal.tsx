@@ -5,7 +5,7 @@ import MuiButton from '../../../../../ActionComp/MuiButton'
 type PostImageModalProps={
     post:string,
     handleChange:(e:React.ChangeEvent<HTMLInputElement>)=>void,
-    preview:string,
+    preview:string | null,
     setPreview:(url:string|null)=>void
 }
 

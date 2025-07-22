@@ -36,7 +36,7 @@ export default function HomePage() {
         backgroundColor:"#f5f3f0ff"
       }}
     >
-      <LeftSideBar />
+      
       <HomeComp />
       <RightSideBar />
     </Box>

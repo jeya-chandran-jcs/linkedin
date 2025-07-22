@@ -1,6 +1,6 @@
 import { Avatar, Box, Tooltip, Typography, } from '@mui/material'
 import { useUserHomeContext } from '../../../../../hooks/useHomeContext';
-import type { MockDataProps } from '../../../../../types/mockDataApi';
+import type { MockDataProps, PostProps } from '../../../../../types/mockDataApi';
 import MuiButton from '../../../../ActionComp/MuiButton';
 import { useState } from 'react';
 import AddPostTextModal from './AddPostModal/AddPostTextModal';
@@ -9,17 +9,14 @@ import { useMutation } from '@tanstack/react-query';
 import { API } from '../../../../../global';
 import postData from '../../../../../utility/api/postData';
 import { cloudImageUploader } from '../../../../../utility/cloudinaryUploadHelper.ts/cloudinaryHelperFunction';
+import { v4 as uuidv4 } from 'uuid';
+
 
 export type AddPostModalProps = {
 
-    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+    onClick: () => void
 }
 
-type UserPostType = {
-  post: string;
-  imageUrl: string | null;
-  createdAt: string;
-};
 
 
 export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
@@ -29,9 +26,10 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
     const [changeModal, setChangeModal] = useState<boolean>(false)
     
     const userData = useUserHomeContext()
+    console.log("userData",userData)
 
     const mutation = useMutation({
-            mutationFn: (newField:UserPostType) => postData({ API: `${API}/${userCurrentId }`, method: "PUT", data: {post:newField}}),
+            mutationFn: (newField:PostProps[]) => postData({ API: `${API}/${userCurrentId }`, method: "PUT", data: {post:newField}}),
             onSuccess: (data) => {
                 console.log("data added from form values", data)
                 alert("data added")
@@ -44,6 +42,8 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
     
         const userCurrentId = sessionStorage.getItem("userId")
     const userProfileData = userData.find((singleUser: MockDataProps) => singleUser.id === userCurrentId)
+    if(!userProfileData) return
+    console.log("userProfile data",userProfileData)
 
     if (!userProfileData) return
 
@@ -59,12 +59,21 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
             {
                 imageUrl=preview
             }
-            const  userPost={
+            const  userPost:PostProps={
+                uuid:uuidv4(),
                 post,
-                imageUrl,
-                createdAt:new Date().toISOString()
+                imageUrl : imageUrl ?? "",
+                createdAt:new Date()
             }
-            mutation.mutate(userPost)
+            const userAllPost=userProfileData.post || []
+            
+            mutation.mutate([...userAllPost,userPost])
+
+            alert("data successfully added")
+            setPost("")
+            setImage(null)
+            setPreview(null)
+            onClick()
         }
         catch(err)
         {
@@ -114,7 +123,7 @@ export default function AddPostModalWrapper({ onClick }: AddPostModalProps) {
             <Box>
                 <Box sx={{ padding: "0 1rem", height: "40vh", overflowY: "scroll" }}>
                     {changeModal ?
-                        <AddPostImageModal image={image} setImage={setImage} preview={preview} setPreview={setPreview} />
+                        <AddPostImageModal  setImage={setImage} preview={preview} setPreview={setPreview} />
 
                         :
                         <AddPostTextModal post={post} handleChange={(e) => setPost(e.target.value)} preview={preview} setPreview={setPreview} />

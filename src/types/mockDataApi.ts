@@ -73,6 +73,13 @@ export  type JobPreferenceFormProps = {
           visibility: string;
       }
 
+export type PostProps={
+  uuid?:string,
+  createdAt:Date, 
+  imageUrl: string,
+  post : string
+}
+
 export type MockDataProps={
     id:string,
     name:string,
@@ -96,10 +103,10 @@ export type MockDataProps={
     interest:[],
     connections:[],
     uid:string,
-    post:[],
     course:[],
     organization:OrganizationEntry,
     photoUrl?:string,
     backGroundPic?:string,
-    jobPreference:JobPreferenceFormProps
+    jobPreference:JobPreferenceFormProps,
+    post:PostProps[]
 }

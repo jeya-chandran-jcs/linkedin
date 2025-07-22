@@ -7,14 +7,14 @@ import { useState } from "react";
 import TextFieldMui from "./TextFieldMui";
 
 type AddPostImageProps = {
-  image: string,
+  image?: string,
   setImage: (file: File | null) => void,
-  preview: string,
+  preview: string | null,
   setPreview: (url: string | null) => void,
 
 }
 
-export default function AddPostImageModal({ image, setImage, preview, setPreview }: AddPostImageProps) {
+export default function AddPostImageModal({ setImage, preview, setPreview }: AddPostImageProps) {
   const [showFileInput, setShowFileInput] = useState<boolean>(true)
   const [showUrlInput, setShowUrlInput] = useState<boolean>(true)
 
@@ -71,7 +71,7 @@ export default function AddPostImageModal({ image, setImage, preview, setPreview
         </Box>
         {/* <CloudImageUploader /> */}
 
-        {showUrlInput && <TextFieldMui fullWidth={false} value={preview} placeHolder="Add Image Url" name="cloudImage" type="text" variant={"outlined"} sx={{ backgroundColor: "white", width: "70%" }}
+        {showUrlInput && <TextFieldMui fullWidth={false} value={preview ?? ""} placeHolder="Add Image Url" name="cloudImage" type="text" variant={"outlined"} sx={{ backgroundColor: "white", width: "70%" }}
           handleChange={handleUrlChange}
         />}
       </Box>
