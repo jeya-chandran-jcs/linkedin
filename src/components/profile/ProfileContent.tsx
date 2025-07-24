@@ -48,11 +48,11 @@ export default function ProfileContent() {
         <About auth={auth}/>
         <ProfileAdd />
         <Education  auth={auth}/>
-        <Experience />
-        <Skills />
-        <Projects />
-        <License_Certification />
-        <Languages />
+        <Experience auth={auth}/>
+        <Skills auth={auth}/>
+        <Projects auth={auth}/>
+        <License_Certification auth={auth}/>
+        <Languages auth={auth}/>
       </Box>
     </UserProfileContext.Provider>
 

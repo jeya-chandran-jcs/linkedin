@@ -23,6 +23,7 @@ export default function ProfileUser({ auth }: AuthProps) {
     setActive(data)
     setShow(true)
   }
+  console.log("url",userProfile.photoUrl)
   return (
     <Box
       sx={{

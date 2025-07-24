@@ -1,8 +1,9 @@
 import { useUserProfile } from "../../../hooks/UserProfileContext";
 import CommonForm from "./commonForm.tsx/CommonForm";
+import type { AuthProps } from "./ProfileUser";
 
 
-export default function Skills() {
+export default function Skills({auth}:AuthProps) {
   const userEducation=useUserProfile()
          const educationList=userEducation.skill.slice(0,2)
      
@@ -15,7 +16,7 @@ export default function Skills() {
              subTitle:"skillLevel",
          }
          return (
-            <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
+            <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey} auth={auth}/>
          )
    
 }

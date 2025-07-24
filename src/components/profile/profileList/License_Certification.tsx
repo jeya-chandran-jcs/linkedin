@@ -2,9 +2,10 @@
 // import CertificateLogo from "../../../utility/CertificateLogo";
 import { useUserProfile } from "../../../hooks/UserProfileContext";
 import CommonForm from "./commonForm.tsx/CommonForm";
+import type { AuthProps } from "./ProfileUser";
 
 
-export default function License_Certification() {
+export default function License_Certification({auth}:AuthProps) {
   const userEducation=useUserProfile()
        const educationList=userEducation.certification.slice(0,2)
    
@@ -19,6 +20,6 @@ export default function License_Certification() {
            description:"credentialURL"
        }
        return (
-          <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey}/>
+          <CommonForm commonStructure={fieldSet} message={message} data={educationList} apiKey={apiKey} auth={auth}/>
        )
 }
